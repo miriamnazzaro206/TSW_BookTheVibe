@@ -57,4 +57,8 @@ public class CarrelloBean implements Serializable {
     public int getNumeroElementi() {
         return elementi.size();
     }
+    
+    public void svuota() {
+        this.elementi.clear();
+    }
 }
