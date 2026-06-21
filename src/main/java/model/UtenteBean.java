@@ -9,7 +9,7 @@ public class UtenteBean implements Serializable{
 	private String nome;
 	private String cognome;
 	private String email;
-	private String ruolo;
+	private String ruolo= "USER";
 	private String password;
 	private LocalDate data_nascita;
 	private String cellulare;
