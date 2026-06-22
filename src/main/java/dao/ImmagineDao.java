@@ -11,8 +11,6 @@ public interface ImmagineDao {
 	
 	public boolean doDelete(int id_img) throws SQLException;
 
-	public ImmagineBean doRetrieveByKey(int id_img) throws SQLException;
-	
-	public ArrayList<ImmagineBean> doRetrieveAll() throws SQLException;
+	public ArrayList <ImmagineBean> doRetrieveByActivityId(int attivita_id) throws SQLException;
 
 }
