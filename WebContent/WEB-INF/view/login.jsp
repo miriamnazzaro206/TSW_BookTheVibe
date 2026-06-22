@@ -12,6 +12,7 @@
 	<tr><td>Inserire e-mail</td><td><input type=text name=txtEmail></td></tr>
 	<tr><td>Inserire password</td><td><input type=password name=txtPwd></td></tr>
 	<tr><td><input type=submit value=Login></td><td><input type=reset></td></tr>
+	<tr><td colspan="2">Non sei registrato? <a href="registrazione.jsp">Registrati qui</a></td></tr>
 	</table>
 	</form>
 
