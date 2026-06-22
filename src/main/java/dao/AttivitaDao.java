@@ -23,4 +23,5 @@ public interface AttivitaDao {
 	
 	public ArrayList<String> doRetrieveAllCategorie() throws SQLException;
 	
+	
 }

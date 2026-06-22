@@ -185,5 +185,4 @@ public class AttivitaDaoImp implements AttivitaDao{
 		}
 		return categorie;
 	}
-
 }

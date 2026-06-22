@@ -15,5 +15,6 @@ public interface UtenteDao {
 	public UtenteBean doRetrieveByKey(int idUtente) throws SQLException;
 	
 	public ArrayList<UtenteBean> doRetrieveAll() throws SQLException;
+	
 
 }

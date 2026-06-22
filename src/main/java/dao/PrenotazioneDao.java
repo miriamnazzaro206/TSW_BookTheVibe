@@ -18,5 +18,5 @@ public interface PrenotazioneDao {
 	public ArrayList<PrenotazioneBean> doRetrieveCompreseTraDate(LocalDate dataX, LocalDate dataY) throws SQLException;
 	
 	public ArrayList<PrenotazioneBean> doRetrieveAll() throws SQLException;
-
+	
 }

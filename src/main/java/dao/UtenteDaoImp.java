@@ -18,7 +18,7 @@ public class UtenteDaoImp implements UtenteDao {
 		this.ds = ds;
 	}
 	
-	@Override
+	
 	public void doSave(UtenteBean utente) throws SQLException {
 		String sql = "INSERT INTO " + TABLE_NAME + " (nome, cognome, email, ruolo, password, data_nascita, cellulare, via, civico, cap, nazione, citta) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 

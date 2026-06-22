@@ -13,12 +13,13 @@ import model.PrenotazioneBean;
 
 public class PrenotazioneDaoImp implements PrenotazioneDao{
 	private static final String TABLE_NAME = "prenotazione";
+	
 	private DataSource ds = null;
 
 	public PrenotazioneDaoImp(DataSource ds) {
 		this.ds = ds;
 	}
-	
+
 	public void doSave(PrenotazioneBean prenotazione) throws SQLException{
 		String sql = "INSERT INTO " + TABLE_NAME + " (utente_id, codice_sconto_id, attivita_id, data_evento, data_prenotazione, prezzo_tot, stato_pagamento, num_prenotati) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
