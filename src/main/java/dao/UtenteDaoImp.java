@@ -131,4 +131,33 @@ public class UtenteDaoImp implements UtenteDao {
 		}
 		return listaUtenti;
 	}
+	
+	
+	public UtenteBean doRetrieveByEmailAndPassword(String email, String password) throws SQLException {
+	    
+	    String query = "SELECT * FROM utente WHERE email = ? AND password = ?";
+	    UtenteBean utente = null;
+
+	    try (Connection con = ds.getConnection();
+	         PreparedStatement ps = con.prepareStatement(query)) {
+
+	        ps.setString(1, email);
+	        ps.setString(2, password);
+	        
+	        ResultSet rs = ps.executeQuery();
+
+	        if (rs.next()) {
+	            utente = new UtenteBean();
+	          
+	            utente.setId_utente(rs.getInt("id"));
+	            utente.setNome(rs.getString("nome"));
+	            utente.setCognome(rs.getString("cognome"));
+	            utente.setEmail(rs.getString("email"));
+	            utente.setPassword(rs.getString("password"));
+	            utente.setRuolo(rs.getString("ruolo"));
+	        }
+	    }
+	    
+	 return utente;
+	}
 }
