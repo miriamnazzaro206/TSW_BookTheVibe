@@ -16,5 +16,6 @@ public interface UtenteDao {
 	
 	public ArrayList<UtenteBean> doRetrieveAll() throws SQLException;
 	
-
+	public UtenteBean doRetrieveByEmailAndPassword(String email, String password) throws SQLException;
+	
 }
