@@ -22,7 +22,7 @@ public class ImmagineDaoImp implements ImmagineDao {
     @Override
     public void doSave(ImmagineBean immagine) throws SQLException {
         // Query di inserimento escludento id_img perche nel db è autoincrement
-        String query = "INSERT INTO immagine (formato, immagine, testo_alternativo, attivita_id) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO immagine (formato, dati_immagine, testo_alternativo, attivita_id) VALUES (?, ?, ?, ?)";
 
         try (Connection con = ds.getConnection();
              PreparedStatement ps = con.prepareStatement(query)) {
@@ -71,7 +71,7 @@ public class ImmagineDaoImp implements ImmagineDao {
                 img.setAttivita_id(rs.getInt("attivita_id"));
                 img.setFormato(rs.getString("formato"));
                 
-                img.setDati_immagine(rs.getBytes("immagine")); 
+                img.setDati_immagine(rs.getBytes("dati_immagine")); 
                 img.setTesto_alternativo(rs.getString("testo_alternativo"));
                 
                 listaImmagini.add(img);
