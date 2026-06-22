@@ -7,7 +7,7 @@ import model.AttivitaBean;
 
 public interface AttivitaDao {
 	
-	public void doSave(AttivitaDao attivita) throws SQLException;
+	public void doSave(AttivitaBean attivita) throws SQLException;
 	
 	public boolean doDelete(int idAttivita) throws SQLException;
 
