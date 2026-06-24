@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preview Carrello</title>
+<link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+<nav class="topbar">
+	<a class="brand" href="#">BookTheVibe</a>
+	<div class="nav-left">
+		<div class="dropdown"><button type="button">Categorie</button><div class="dropdown-menu"><a href="#">Eventi</a><a href="#">Gite</a><a href="#">Esperienze</a></div></div>
+		<div class="dropdown"><button type="button">Città</button><div class="dropdown-menu"><a href="#">Roma</a><a href="#">Firenze</a><a href="#">Venezia</a></div></div>
+	</div>
+	<div class="nav-right">
+		<a href="#">Home</a><a href="#">Profilo</a><a href="#">Le mie prenotazioni</a>
+		<a class="icon-link" href="#" aria-label="Carrello">&#128722;</a>
+		<a href="#">Logout</a>
+	</div>
+</nav>
+<main class="section cart-layout">
+	<section>
+		<h1>Carrello</h1>
+		<div class="cart-row">
+			<div>
+				<strong>Roma segreta al tramonto</strong>
+				<p>2026-07-12 &middot; &euro; 39.00</p>
+			</div>
+			<label class="quantity-control">Quantita
+				<input class="cart-quantity" type="number" min="1" value="2">
+			</label>
+			<button class="danger" type="button">X</button>
+		</div>
+		<div class="cart-row">
+			<div>
+				<strong>Venezia in gondola</strong>
+				<p>2026-08-03 &middot; &euro; 65.00</p>
+			</div>
+			<label class="quantity-control">Quantita
+				<input class="cart-quantity" type="number" min="1" value="1">
+			</label>
+			<button class="danger" type="button">X</button>
+		</div>
+		<button type="button">Svuota carrello</button>
+	</section>
+	<aside class="booking-panel">
+		<h2>Totale</h2>
+		<p class="total">&euro; <span>143.00</span></p>
+		<form>
+			<input type="text" placeholder="Codice sconto">
+			<button type="button">Applica</button>
+			<p class="error"></p>
+		</form>
+		<p class="error"></p>
+		<a class="primary button-link" href="#">Effettua pagamento</a>
+	</aside>
+</main>
+</body>
+</html>

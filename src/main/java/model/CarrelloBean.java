@@ -8,6 +8,8 @@ public class CarrelloBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private ArrayList<ElementoCarrelloBean> elementi;
+    private String codiceSconto;
+    private double percentualeSconto;
 
     public CarrelloBean() {
         this.elementi = new ArrayList<ElementoCarrelloBean>();
@@ -54,11 +56,37 @@ public class CarrelloBean implements Serializable {
         return totale;
     }
 
+    public double getPrezzoScontato() {
+        double totale = getPrezzoTotale();
+        if (percentualeSconto <= 0) {
+            return totale;
+        }
+        return totale - (totale * percentualeSconto / 100.0);
+    }
+
     public int getNumeroElementi() {
         return elementi.size();
     }
     
     public void svuota() {
         this.elementi.clear();
+        this.codiceSconto = null;
+        this.percentualeSconto = 0;
+    }
+
+    public String getCodiceSconto() {
+        return codiceSconto;
+    }
+
+    public void setCodiceSconto(String codiceSconto) {
+        this.codiceSconto = codiceSconto;
+    }
+
+    public double getPercentualeSconto() {
+        return percentualeSconto;
+    }
+
+    public void setPercentualeSconto(double percentualeSconto) {
+        this.percentualeSconto = percentualeSconto;
     }
 }

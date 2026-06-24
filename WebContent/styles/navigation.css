@@ -1,0 +1,125 @@
+.topbar {
+	position: sticky;
+	top: 0;
+	z-index: 10;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	padding: 0.8rem 1.5rem;
+	background: linear-gradient(90deg, color-mix(in srgb, var(--lime) 42%, white), color-mix(in srgb, var(--green) 16%, white));
+	border-bottom: 2px solid var(--green);
+	backdrop-filter: blur(14px);
+}
+
+.brand {
+	font-weight: 900;
+	font-size: 1.2rem;
+	color: var(--deep);
+	letter-spacing: 0;
+	text-shadow: 0 1px 0 color-mix(in srgb, var(--lime) 65%, white);
+}
+
+.nav-left,
+.nav-right {
+	display: flex;
+	align-items: center;
+	gap: 1.05rem;
+	flex-wrap: wrap;
+}
+
+.nav-right a:not(.icon-link),
+.nav-left button {
+	min-height: 38px;
+	display: inline-flex;
+	align-items: center;
+}
+
+.nav-left button {
+	border: 0;
+	background: transparent;
+	box-shadow: none;
+	padding: 0;
+	color: var(--deep);
+	font-weight: 900;
+	position: relative;
+}
+
+.nav-left button:hover {
+	transform: none;
+	box-shadow: none;
+	color: var(--deep);
+}
+
+.nav-left button::after {
+	content: "";
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 4px;
+	height: 3px;
+	border-radius: 999px;
+	background: var(--green);
+	opacity: 0.72;
+}
+
+.dropdown button::before {
+	content: "";
+	width: 7px;
+	height: 7px;
+	border-right: 2px solid var(--deep);
+	border-bottom: 2px solid var(--deep);
+	transform: rotate(45deg);
+	margin-right: 0.45rem;
+	margin-top: -0.2rem;
+}
+
+.nav-right a:not(.icon-link) {
+	font-weight: 700;
+}
+
+.nav-right a:not(.icon-link):hover {
+	color: var(--deep);
+}
+
+.dropdown {
+	position: relative;
+}
+
+.dropdown-menu {
+	display: none;
+	position: absolute;
+	top: calc(100% + 0.35rem);
+	left: 0;
+	min-width: 190px;
+	background: var(--surface);
+	border: 1px solid var(--violet);
+	border-radius: 8px;
+	box-shadow: var(--shadow-card);
+	overflow: hidden;
+}
+
+.dropdown:hover .dropdown-menu,
+.dropdown:focus-within .dropdown-menu {
+	display: block;
+}
+
+.dropdown-menu a {
+	display: block;
+	padding: 0.7rem 0.9rem;
+}
+
+.dropdown-menu a:hover {
+	background: color-mix(in srgb, var(--green) 24%, white);
+}
+
+.icon-link {
+	font-size: 1.15rem;
+	width: 38px;
+	height: 38px;
+	display: inline-grid;
+	place-items: center;
+	border-radius: 50%;
+	background: color-mix(in srgb, var(--violet) 20%, white);
+	color: var(--deep);
+}

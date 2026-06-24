@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preview Recensione</title>
+<link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+<nav class="topbar">
+	<a class="brand" href="#">BookTheVibe</a>
+	<div class="nav-left">
+		<div class="dropdown"><button type="button">Categorie</button><div class="dropdown-menu"><a href="#">Eventi</a><a href="#">Gite</a><a href="#">Esperienze</a></div></div>
+		<div class="dropdown"><button type="button">Città</button><div class="dropdown-menu"><a href="#">Roma</a><a href="#">Firenze</a><a href="#">Venezia</a></div></div>
+	</div>
+	<div class="nav-right">
+		<a href="#">Home</a>
+		<a href="#">Le mie prenotazioni</a>
+		<a class="icon-link" href="#" aria-label="Profilo">&#128100;</a>
+		<a class="icon-link" href="#" aria-label="Carrello">&#128722;</a>
+		<a href="#">Logout</a>
+	</div>
+</nav>
+<main class="section narrow">
+	<h1>Recensione per Venezia in gondola</h1>
+	<form class="form-grid validated-form">
+		<select name="punteggio" required>
+			<option value="">Punteggio</option>
+			<option>1</option>
+			<option>2</option>
+			<option>3</option>
+			<option selected>4</option>
+			<option>5</option>
+		</select>
+		<span class="error"></span>
+		<textarea name="testo" placeholder="Racconta la tua esperienza" required>Esperienza molto suggestiva, guida puntuale e giro ben organizzato.</textarea>
+		<span class="error"></span>
+		<button class="primary" type="button">Pubblica recensione</button>
+	</form>
+</main>
+</body>
+</html>

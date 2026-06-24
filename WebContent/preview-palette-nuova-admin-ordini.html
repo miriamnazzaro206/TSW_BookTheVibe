@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preview Palette Nuova - Riepilogo Ordini</title>
+<link rel="stylesheet" href="styles/main.css">
+<link rel="stylesheet" href="styles/palette-nuova-preview.css">
+</head>
+<body>
+<nav class="topbar">
+	<a class="brand" href="#">BookTheVibe</a>
+	<div class="nav-left">
+		<div class="dropdown"><button type="button">Categorie</button><div class="dropdown-menu"><a href="#">Eventi</a><a href="#">Gite</a><a href="#">Esperienze</a></div></div>
+		<div class="dropdown"><button type="button">Città</button><div class="dropdown-menu"><a href="#">Roma</a><a href="#">Firenze</a><a href="#">Venezia</a></div></div>
+	</div>
+	<div class="nav-right">
+		<a href="#">Home</a><a href="#">Le mie prenotazioni</a><a href="#">Catalogo</a><a href="#">Riepilogo Prenotazioni</a><a href="#">Codici Sconto</a>
+		<a class="icon-link" href="#" aria-label="Profilo">&#128100;</a><a class="icon-link" href="#" aria-label="Carrello">&#128722;</a><a href="#">Logout</a>
+	</div>
+</nav>
+<main class="section">
+	<h1>Gestione Ordini</h1>
+	<form class="filters" id="orderFilters">
+		<select name="filtro"><option value="tutti">Tutti</option><option value="date">Filtra per data</option><option value="utente">Filtra per utente</option></select>
+		<input type="date" name="da" class="filter-date">
+		<input type="date" name="a" class="filter-date">
+		<select name="utenteId" class="filter-user"><option value="1">Utente 1</option><option value="2">Utente 2</option><option value="3">Utente 3</option></select>
+		<button type="button">Applica</button>
+	</form>
+	<div class="table-wrap">
+		<table>
+			<thead><tr><th>ID</th><th>Utente</th><th>Attivita</th><th>Data evento</th><th>Data prenotazione</th><th>Biglietti</th><th>Totale</th><th>Pagamento</th></tr></thead>
+			<tbody>
+				<tr><td>104</td><td>1</td><td>Roma segreta al tramonto</td><td>2026-07-12</td><td>2026-06-23</td><td>2</td><td>&euro; 78.00</td><td>COMPLETATO</td></tr>
+				<tr><td>105</td><td>2</td><td>Venezia in gondola</td><td>2026-08-03</td><td>2026-06-22</td><td>1</td><td>&euro; 65.00</td><td>COMPLETATO</td></tr>
+				<tr><td>106</td><td>3</td><td>Tour artistico a Firenze</td><td>2026-09-15</td><td>2026-06-21</td><td>4</td><td>&euro; 196.00</td><td>COMPLETATO</td></tr>
+			</tbody>
+		</table>
+	</div>
+</main>
+</body>
+</html>

@@ -22,6 +22,16 @@ public interface AttivitaDao {
 	public ArrayList<AttivitaBean> doRetrieveAttive() throws SQLException;
 	
 	public ArrayList<String> doRetrieveAllCategorie() throws SQLException;
+
+	public ArrayList<String> doRetrieveAllCitta() throws SQLException;
+
+	public ArrayList<AttivitaBean> doRetrieveAttiveByCategoria(String categoria) throws SQLException;
+
+	public ArrayList<AttivitaBean> doRetrieveAttiveByCitta(String citta) throws SQLException;
+
+	public boolean doUpdateStato(int idAttivita, boolean stato) throws SQLException;
+
+	public int doSaveAndReturnId(AttivitaBean attivita) throws SQLException;
 	
 	
 }

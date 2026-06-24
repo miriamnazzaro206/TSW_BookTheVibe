@@ -18,7 +18,7 @@ public class WelcomeServlet extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/view/homepage.jsp").forward(request, response);
+		response.sendRedirect(request.getContextPath() + "/home");
 	}
 
 	

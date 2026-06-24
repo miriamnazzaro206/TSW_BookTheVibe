@@ -1,0 +1,47 @@
+:root {
+	--green: #8EB9FC;
+	--lime: #FFF197;
+	--violet: #274DEA;
+	--orange: #FF513D;
+	--deep: #274DEA;
+	--ink: #274DEA;
+	--muted: #FF513D;
+	--paper: color-mix(in srgb, #EBFFDC 82%, white);
+	--surface: color-mix(in srgb, #EBFFDC 45%, white);
+	--line: color-mix(in srgb, #8EB9FC 55%, #274DEA);
+	--danger: #FF513D;
+	--shadow-soft: 0 10px 24px color-mix(in srgb, #274DEA 16%, transparent);
+	--shadow-card: 0 14px 28px color-mix(in srgb, #8EB9FC 28%, transparent);
+}
+
+body {
+	background: linear-gradient(180deg, color-mix(in srgb, #EBFFDC 58%, transparent), transparent 260px), var(--paper);
+}
+
+.topbar {
+	background: linear-gradient(90deg, color-mix(in srgb, #EBFFDC 72%, white), color-mix(in srgb, #8EB9FC 35%, white));
+	border-bottom-color: #8EB9FC;
+}
+
+.hero {
+	background:
+		linear-gradient(135deg, color-mix(in srgb, #8EB9FC 48%, transparent), color-mix(in srgb, #FFF197 42%, transparent)),
+		linear-gradient(180deg, color-mix(in srgb, #EBFFDC 70%, white), color-mix(in srgb, #FF513D 12%, white));
+}
+
+.primary {
+	background: #274DEA;
+	border-color: #274DEA;
+}
+
+.nav-left button::after {
+	background: #FF513D;
+}
+
+.icon-link {
+	background: color-mix(in srgb, #8EB9FC 30%, white);
+}
+
+th {
+	background: color-mix(in srgb, #8EB9FC 42%, #EBFFDC);
+}

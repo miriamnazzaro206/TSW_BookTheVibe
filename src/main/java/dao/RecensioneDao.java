@@ -11,4 +11,6 @@ public interface RecensioneDao {
 
 	public  ArrayList <RecensioneBean> doRetrieveByKey(int idAttivita) throws SQLException;
 
+	public RecensioneBean doRetrieveByAttivitaAndUtente(int idAttivita, int idUtente) throws SQLException;
+
 }
