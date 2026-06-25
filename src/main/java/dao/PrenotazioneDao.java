@@ -19,4 +19,6 @@ public interface PrenotazioneDao {
 	
 	public ArrayList<PrenotazioneBean> doRetrieveAll() throws SQLException;
 	
+	public ArrayList<Integer> doRetrieveUtentiConPrenotazioni() throws SQLException;
+	
 }
