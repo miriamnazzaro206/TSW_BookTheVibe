@@ -33,6 +33,5 @@ public interface AttivitaDao {
 
 	public int doSaveAndReturnId(AttivitaBean attivita) throws SQLException;
 	
-	
 }
 
