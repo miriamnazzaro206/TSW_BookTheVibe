@@ -31,6 +31,7 @@
 						data-data="<%=e.getDataScelta()%>">
 				</label>
 				<form method="post" action="<%=request.getContextPath()%>/carrello">
+					<input type="hidden" name="accessToken" value="<%=session.getAttribute("accessToken")%>">
 					<input type="hidden" name="action" value="rimuovi">
 					<input type="hidden" name="id" value="<%=e.getAttivita().getId_attivita()%>">
 					<input type="hidden" name="data" value="<%=e.getDataScelta()%>">
@@ -39,6 +40,7 @@
 			</div>
 		<% } %>
 		<form method="post" action="<%=request.getContextPath()%>/carrello">
+			<input type="hidden" name="accessToken" value="<%=session.getAttribute("accessToken")%>">
 			<input type="hidden" name="action" value="svuota">
 			<button type="submit">Svuota carrello</button>
 		</form>
@@ -47,6 +49,8 @@
 		<h2>Totale</h2>
 		<p class="total">&euro; <span id="cartTotal"><%=String.format("%.2f", carrello.getPrezzoScontato())%></span></p>
 		<form id="couponForm" method="post" data-url="<%=request.getContextPath()%>/carrello">
+			<input type="hidden" name="accessToken" value="<%=session.getAttribute("accessToken")%>">
+			<input type="hidden" name="action" value="sconto">
 			<input type="text" name="codice" placeholder="Codice sconto">
 			<button type="submit">Applica</button>
 			<p class="error" id="couponMessage"></p>

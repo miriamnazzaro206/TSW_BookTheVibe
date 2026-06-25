@@ -20,7 +20,7 @@ String accessToken = (String) session.getAttribute("accessToken");
 			</div>
 		</div>
 		<div class="dropdown">
-			<button type="button">Città</button>
+			<button type="button">Citta'</button>
 			<div class="dropdown-menu">
 				<% if (cittaNav != null) for (String citta : cittaNav) { %>
 					<a href="<%=ctx%>/catalogo?citta=<%=java.net.URLEncoder.encode(citta, "UTF-8")%>"><%=citta%></a>

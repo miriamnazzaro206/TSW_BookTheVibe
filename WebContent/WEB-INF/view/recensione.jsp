@@ -5,6 +5,7 @@
 <body><%@ include file="navbar.jsp" %><% AttivitaBean a = (AttivitaBean) request.getAttribute("attivita"); %>
 <main class="section narrow"><h1>Recensione per <%=a.getTitolo()%></h1>
 <form method="post" action="<%=request.getContextPath()%>/recensione" class="form-grid validated-form">
+	<input type="hidden" name="accessToken" value="<%=session.getAttribute("accessToken")%>">
 	<input type="hidden" name="attivitaId" value="<%=a.getId_attivita()%>">
 	<select name="punteggio" required><option value="">Punteggio</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><span class="error"></span>
 	<textarea name="testo" placeholder="Racconta la tua esperienza" required></textarea><span class="error"></span>

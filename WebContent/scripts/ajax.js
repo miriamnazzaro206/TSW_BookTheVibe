@@ -29,9 +29,19 @@ function setupCouponAjax() {
     button.textContent = "Verifico...";
     message.classList.remove("visible", "is-success");
     try {
-      const formData = new FormData(couponForm);
-      formData.append("action", "sconto");
-      const res = await fetch(couponForm.dataset.url, { method: "POST", body: formData });
+      const formData = new URLSearchParams(new FormData(couponForm));
+      formData.set("action", "sconto");
+      if (!formData.has("accessToken") && window.BTV_ACCESS_TOKEN) {
+        formData.set("accessToken", window.BTV_ACCESS_TOKEN);
+      }
+      const res = await fetch(couponForm.dataset.url, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+        body: formData
+      });
+      if (!res.ok) {
+        throw new Error(`Coupon request failed with ${res.status}`);
+      }
       const json = await res.json();
       if (json.valid) {
         document.getElementById("cartTotal").textContent = json.totale;
@@ -42,7 +52,7 @@ function setupCouponAjax() {
         message.classList.add("visible");
       }
     } catch (error) {
-      message.textContent = "Non riesco ad applicare il codice in questo momento.";
+      message.textContent = "Non riesco ad applicare il codice in questo momento. Ricarica la pagina e riprova.";
       message.classList.add("visible");
     } finally {
       button.disabled = false;
@@ -64,14 +74,18 @@ function setupCartQuantityAjax() {
         message.classList.add("visible", "is-success");
       }
       try {
-        const formData = new FormData();
-        formData.append("action", "aggiorna");
-        formData.append("ajax", "true");
-        formData.append("id", input.dataset.id);
-        formData.append("data", input.dataset.data);
-        formData.append("quantita", input.value);
-        if (window.BTV_ACCESS_TOKEN) formData.append("accessToken", window.BTV_ACCESS_TOKEN);
-        const res = await fetch(input.dataset.url, { method: "POST", body: formData });
+        const formData = new URLSearchParams();
+        formData.set("action", "aggiorna");
+        formData.set("ajax", "true");
+        formData.set("id", input.dataset.id);
+        formData.set("data", input.dataset.data);
+        formData.set("quantita", input.value);
+        if (window.BTV_ACCESS_TOKEN) formData.set("accessToken", window.BTV_ACCESS_TOKEN);
+        const res = await fetch(input.dataset.url, {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+          body: formData
+        });
         const json = await res.json();
         if (json.valid) {
           const total = document.getElementById("cartTotal");

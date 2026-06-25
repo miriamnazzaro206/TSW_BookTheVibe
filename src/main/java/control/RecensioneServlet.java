@@ -20,9 +20,6 @@ public class RecensioneServlet extends BaseServlet {
 		if (!requireUser(request, response)) {
 			return;
 		}
-		if (!validateAccessToken(request, response)) {
-			return;
-		}
 		try {
 			int id = Integer.parseInt(request.getParameter("attivitaId"));
 			request.setAttribute("attivita", new AttivitaDaoImp(getDataSource()).doRetrieveByKey(id));
@@ -34,6 +31,9 @@ public class RecensioneServlet extends BaseServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (!requireUser(request, response)) {
+			return;
+		}
+		if (!validateAccessToken(request, response)) {
 			return;
 		}
 		try {

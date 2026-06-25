@@ -1,5 +1,8 @@
 button,
 .button-link {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
 	border: 1px solid var(--deep);
 	background: var(--surface);
 	color: var(--deep);
@@ -7,6 +10,8 @@ button,
 	padding: 0.65rem 0.9rem;
 	cursor: pointer;
 	font-weight: 700;
+	line-height: 1.2;
+	text-decoration: none;
 	transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
 }
 
@@ -144,6 +149,11 @@ textarea {
 .form-grid {
 	display: grid;
 	gap: 0.7rem;
+}
+
+.booking-panel .button-link {
+	width: 100%;
+	margin-top: 0.75rem;
 }
 
 .availability-message {

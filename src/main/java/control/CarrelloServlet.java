@@ -25,11 +25,15 @@ public class CarrelloServlet extends BaseServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String action = request.getParameter("action");
+		CarrelloBean carrello = getCarrello(request);
+		if ("sconto".equals(action) || request.getParameter("codice") != null) {
+			applySconto(request, response, carrello);
+			return;
+		}
 		if (!validateAccessToken(request, response)) {
 			return;
 		}
-		String action = request.getParameter("action");
-		CarrelloBean carrello = getCarrello(request);
 
 		if ("svuota".equals(action)) {
 			carrello.svuota();
@@ -57,9 +61,6 @@ public class CarrelloServlet extends BaseServlet {
 				writeCartJson(response, true, carrello, "Quantita aggiornata");
 				return;
 			}
-		} else if ("sconto".equals(action)) {
-			applySconto(request, response, carrello);
-			return;
 		}
 		response.sendRedirect(request.getContextPath() + "/carrello");
 	}

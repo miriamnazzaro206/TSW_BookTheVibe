@@ -18,9 +18,6 @@ public class AdminCouponServlet extends BaseServlet {
 		if (!requireAdmin(request, response)) {
 			return;
 		}
-		if (!validateAccessToken(request, response)) {
-			return;
-		}
 		try {
 			request.setAttribute("coupon", new CodiceScontoDaoImp(getDataSource()).doRetrieveAll());
 			forward(request, response, "admin-coupon.jsp");
@@ -31,6 +28,9 @@ public class AdminCouponServlet extends BaseServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (!requireAdmin(request, response)) {
+			return;
+		}
+		if (!validateAccessToken(request, response)) {
 			return;
 		}
 		try {
