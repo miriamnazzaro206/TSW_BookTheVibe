@@ -67,4 +67,26 @@ public class RecensioneDaoImp implements RecensioneDao {
         
         return listaRecensioni;
     }
+
+    @Override
+    public RecensioneBean doRetrieveByAttivitaAndUtente(int idAttivita, int idUtente) throws SQLException {
+        String query = "SELECT * FROM recensione WHERE attivita_id = ? AND utente_id = ?";
+
+        try (Connection con = ds.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setInt(1, idAttivita);
+            ps.setInt(2, idUtente);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                RecensioneBean recensione = new RecensioneBean();
+                recensione.setAttivita_id(rs.getInt("attivita_id"));
+                recensione.setUtente_id(rs.getInt("utente_id"));
+                recensione.setPunteggio(rs.getInt("punteggio"));
+                recensione.setTesto(rs.getString("testo"));
+                recensione.setData_recensione(rs.getObject("data_recensione", LocalDate.class));
+                return recensione;
+            }
+        }
+        return null;
+    }
 }
