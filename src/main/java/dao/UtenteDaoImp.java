@@ -49,7 +49,7 @@ public class UtenteDaoImp implements UtenteDao {
 	}
 	
 	public boolean doDelete(int idUtente) throws SQLException {
-		String sql = "DELETE FROM " + TABLE_NAME + " WHERE id_utente = ?";
+		String sql = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
 		
 		try (Connection con = ds.getConnection(); 
 			 PreparedStatement ps = con.prepareStatement(sql)) {	
@@ -61,7 +61,7 @@ public class UtenteDaoImp implements UtenteDao {
 	}
 
 	public UtenteBean doRetrieveByKey(int idUtente) throws SQLException {
-		String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id_utente = ?";
+		String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id = ?";
 		UtenteBean utente = null;
 
 		try (Connection con = ds.getConnection(); 
@@ -72,24 +72,7 @@ public class UtenteDaoImp implements UtenteDao {
 				if (rs.next()) {
 					utente = new UtenteBean();
 					
-					utente.setId_utente(rs.getInt("id_utente"));
-					utente.setNome(rs.getString("nome"));
-					utente.setCognome(rs.getString("cognome"));
-					utente.setEmail(rs.getString("email"));
-					utente.setRuolo(rs.getString("ruolo"));
-					utente.setPassword(rs.getString("password"));
-					
-					java.sql.Date dbDate = rs.getDate("data_nascita");
-					if (dbDate != null) {
-						utente.setData_nascita(dbDate.toLocalDate());
-					}
-					
-					utente.setCellulare(rs.getString("cellulare"));
-					utente.setVia(rs.getString("via"));
-					utente.setCivico(rs.getString("civico"));
-					utente.setCap(rs.getString("cap"));
-					utente.setNazione(rs.getString("nazione"));
-					utente.setCitta(rs.getString("citta"));
+					mapUtente(rs, utente);
 				}
 			}
 		}
@@ -107,24 +90,7 @@ public class UtenteDaoImp implements UtenteDao {
 			while (rs.next()) {
 				UtenteBean utente = new UtenteBean();
 				
-				utente.setId_utente(rs.getInt("id_utente"));
-				utente.setNome(rs.getString("nome"));
-				utente.setCognome(rs.getString("cognome"));
-				utente.setEmail(rs.getString("email"));
-				utente.setRuolo(rs.getString("ruolo"));
-				utente.setPassword(rs.getString("password"));
-				
-				java.sql.Date dbDate = rs.getDate("data_nascita");
-				if (dbDate != null) {
-					utente.setData_nascita(dbDate.toLocalDate());
-				}
-				
-				utente.setCellulare(rs.getString("cellulare"));
-				utente.setVia(rs.getString("via"));
-				utente.setCivico(rs.getString("civico"));
-				utente.setCap(rs.getString("cap"));
-				utente.setNazione(rs.getString("nazione"));
-				utente.setCitta(rs.getString("citta"));
+				mapUtente(rs, utente);
 				
 				listaUtenti.add(utente);
 			}
@@ -159,5 +125,49 @@ public class UtenteDaoImp implements UtenteDao {
 	    }
 	    
 	 return utente;
+	}
+
+	public boolean doUpdate(UtenteBean utente) throws SQLException {
+		String sql = "UPDATE " + TABLE_NAME + " SET nome=?, cognome=?, email=?, password=?, data_nascita=?, cellulare=?, via=?, civico=?, cap=?, nazione=?, citta=? WHERE id=?";
+
+		try (Connection con = ds.getConnection();
+			 PreparedStatement ps = con.prepareStatement(sql)) {
+			ps.setString(1, utente.getNome());
+			ps.setString(2, utente.getCognome());
+			ps.setString(3, utente.getEmail());
+			ps.setString(4, utente.getPassword());
+			if (utente.getData_nascita() != null) {
+				ps.setDate(5, java.sql.Date.valueOf(utente.getData_nascita()));
+			} else {
+				ps.setDate(5, null);
+			}
+			ps.setString(6, utente.getCellulare());
+			ps.setString(7, utente.getVia());
+			ps.setString(8, utente.getCivico());
+			ps.setString(9, utente.getCap());
+			ps.setString(10, utente.getNazione());
+			ps.setString(11, utente.getCitta());
+			ps.setInt(12, utente.getId_utente());
+			return ps.executeUpdate() > 0;
+		}
+	}
+
+	private void mapUtente(ResultSet rs, UtenteBean utente) throws SQLException {
+		utente.setId_utente(rs.getInt("id"));
+		utente.setNome(rs.getString("nome"));
+		utente.setCognome(rs.getString("cognome"));
+		utente.setEmail(rs.getString("email"));
+		utente.setRuolo(rs.getString("ruolo"));
+		utente.setPassword(rs.getString("password"));
+		java.sql.Date dbDate = rs.getDate("data_nascita");
+		if (dbDate != null) {
+			utente.setData_nascita(dbDate.toLocalDate());
+		}
+		utente.setCellulare(rs.getString("cellulare"));
+		utente.setVia(rs.getString("via"));
+		utente.setCivico(rs.getString("civico"));
+		utente.setCap(rs.getString("cap"));
+		utente.setNazione(rs.getString("nazione"));
+		utente.setCitta(rs.getString("citta"));
 	}
 }
