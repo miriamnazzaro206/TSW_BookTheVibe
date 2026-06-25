@@ -51,7 +51,7 @@ public class PrenotazioneDaoImp implements PrenotazioneDao{
 	}
 	
 	public PrenotazioneBean doRetrieveByKey(int idPrenotazione) throws SQLException{
-		String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id_prenotazione = ?";
+		String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id = ?";
 		PrenotazioneBean prenotazione = null;
 
 		try (Connection con = ds.getConnection(); 
@@ -62,24 +62,7 @@ public class PrenotazioneDaoImp implements PrenotazioneDao{
 				if (rs.next()) {
 					prenotazione = new PrenotazioneBean();
 					
-					prenotazione.setId_prenotazione(rs.getInt("id_prenotazione"));
-					prenotazione.setUtente_id(rs.getInt("utente_id"));
-					prenotazione.setCodice_sconto_id(rs.getString("codice_sconto_id"));
-					prenotazione.setAttivita_id(rs.getInt("attivita_id"));
-					
-					java.sql.Date dbDataEvento = rs.getDate("data_evento");
-					if (dbDataEvento != null) {
-						prenotazione.setData_evento(dbDataEvento.toLocalDate());
-					}
-					
-					java.sql.Date dbDataPrenotazione = rs.getDate("data_prenotazione");
-					if (dbDataPrenotazione != null) {
-						prenotazione.setData_prenotazione(dbDataPrenotazione.toLocalDate());
-					}
-					
-					prenotazione.setPrezzo_tot(rs.getDouble("prezzo_tot"));
-					prenotazione.setStato_pagamento(rs.getString("stato_pagamento"));
-					prenotazione.setNum_prenotati(rs.getInt("num_prenotati"));
+					mapPrenotazione(rs, prenotazione);
 				}
 			}
 		}
@@ -99,24 +82,7 @@ public class PrenotazioneDaoImp implements PrenotazioneDao{
 	            while (rs.next()) {
 	                PrenotazioneBean prenotazione = new PrenotazioneBean();
 	                
-	                prenotazione.setId_prenotazione(rs.getInt("id_prenotazione"));
-	                prenotazione.setUtente_id(rs.getInt("utente_id"));
-	                prenotazione.setCodice_sconto_id(rs.getString("codice_sconto_id"));
-	                prenotazione.setAttivita_id(rs.getInt("attivita_id"));
-	                
-	                java.sql.Date dbDataEvento = rs.getDate("data_evento");
-	                if (dbDataEvento != null) {
-	                    prenotazione.setData_evento(dbDataEvento.toLocalDate());
-	                }
-	                
-	                java.sql.Date dbDataPrenotazione = rs.getDate("data_prenotazione");
-	                if (dbDataPrenotazione != null) {
-	                    prenotazione.setData_prenotazione(dbDataPrenotazione.toLocalDate());
-	                }
-	                
-	                prenotazione.setPrezzo_tot(rs.getDouble("prezzo_tot"));
-	                prenotazione.setStato_pagamento(rs.getString("stato_pagamento"));
-	                prenotazione.setNum_prenotati(rs.getInt("num_prenotati"));
+	                mapPrenotazione(rs, prenotazione);
 	                
 	                listaPrenotazioni.add(prenotazione);
 	            }
@@ -139,24 +105,7 @@ public class PrenotazioneDaoImp implements PrenotazioneDao{
 				while (rs.next()) {
 					PrenotazioneBean prenotazione = new PrenotazioneBean();
 					
-					prenotazione.setId_prenotazione(rs.getInt("id_prenotazione"));
-					prenotazione.setUtente_id(rs.getInt("utente_id"));
-					prenotazione.setCodice_sconto_id(rs.getString("codice_sconto_id"));
-					prenotazione.setAttivita_id(rs.getInt("attivita_id"));
-					
-					java.sql.Date dbDataEvento = rs.getDate("data_evento");
-					if (dbDataEvento != null) {
-						prenotazione.setData_evento(dbDataEvento.toLocalDate());
-					}
-					
-					java.sql.Date dbDataPrenotazione = rs.getDate("data_prenotazione");
-					if (dbDataPrenotazione != null) {
-						prenotazione.setData_prenotazione(dbDataPrenotazione.toLocalDate());
-					}
-					
-					prenotazione.setPrezzo_tot(rs.getDouble("prezzo_tot"));
-					prenotazione.setStato_pagamento(rs.getString("stato_pagamento"));
-					prenotazione.setNum_prenotati(rs.getInt("num_prenotati"));
+					mapPrenotazione(rs, prenotazione);
 					
 					listaPrenotazioni.add(prenotazione);
 				}
@@ -176,29 +125,43 @@ public class PrenotazioneDaoImp implements PrenotazioneDao{
 			while (rs.next()) {
 				PrenotazioneBean prenotazione = new PrenotazioneBean();
 				
-				prenotazione.setId_prenotazione(rs.getInt("id_prenotazione"));
-				prenotazione.setUtente_id(rs.getInt("utente_id"));
-				prenotazione.setCodice_sconto_id(rs.getString("codice_sconto_id"));
-				prenotazione.setAttivita_id(rs.getInt("attivita_id"));
-				
-				java.sql.Date dbDataEvento = rs.getDate("data_evento");
-				if (dbDataEvento != null) {
-					prenotazione.setData_evento(dbDataEvento.toLocalDate());
-				}
-				
-				java.sql.Date dbDataPrenotazione = rs.getDate("data_prenotazione");
-				if (dbDataPrenotazione != null) {
-					prenotazione.setData_prenotazione(dbDataPrenotazione.toLocalDate());
-				}
-				
-				prenotazione.setPrezzo_tot(rs.getDouble("prezzo_tot"));
-				prenotazione.setStato_pagamento(rs.getString("stato_pagamento"));
-				prenotazione.setNum_prenotati(rs.getInt("num_prenotati"));
+				mapPrenotazione(rs, prenotazione);
 				
 				listaPrenotazioni.add(prenotazione);
 			}
 		}
 		return listaPrenotazioni;
+	}
+
+	public ArrayList<Integer> doRetrieveUtentiConPrenotazioni() throws SQLException {
+		ArrayList<Integer> utenti = new ArrayList<>();
+		String sql = "SELECT DISTINCT utente_id FROM " + TABLE_NAME + " ORDER BY utente_id";
+		try (Connection con = ds.getConnection();
+			 PreparedStatement ps = con.prepareStatement(sql);
+			 ResultSet rs = ps.executeQuery()) {
+			while (rs.next()) {
+				utenti.add(rs.getInt("utente_id"));
+			}
+		}
+		return utenti;
+	}
+
+	private void mapPrenotazione(ResultSet rs, PrenotazioneBean prenotazione) throws SQLException {
+		prenotazione.setId_prenotazione(rs.getInt("id"));
+		prenotazione.setUtente_id(rs.getInt("utente_id"));
+		prenotazione.setCodice_sconto_id(rs.getString("codice_sconto_id"));
+		prenotazione.setAttivita_id(rs.getInt("attivita_id"));
+		java.sql.Date dbDataEvento = rs.getDate("data_evento");
+		if (dbDataEvento != null) {
+			prenotazione.setData_evento(dbDataEvento.toLocalDate());
+		}
+		java.sql.Date dbDataPrenotazione = rs.getDate("data_prenotazione");
+		if (dbDataPrenotazione != null) {
+			prenotazione.setData_prenotazione(dbDataPrenotazione.toLocalDate());
+		}
+		prenotazione.setPrezzo_tot(rs.getDouble("prezzo_tot"));
+		prenotazione.setStato_pagamento(rs.getString("stato_pagamento"));
+		prenotazione.setNum_prenotati(rs.getInt("num_prenotati"));
 	}
 	
 
