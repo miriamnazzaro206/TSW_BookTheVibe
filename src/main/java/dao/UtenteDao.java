@@ -18,4 +18,6 @@ public interface UtenteDao {
 	
 	public UtenteBean doRetrieveByEmailAndPassword(String email, String password) throws SQLException;
 	
+	public boolean doUpdate(UtenteBean utente) throws SQLException;
+	
 }
