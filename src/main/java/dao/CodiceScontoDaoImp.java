@@ -94,4 +94,16 @@ public class CodiceScontoDaoImp implements CodiceScontoDao {
         }
         return listaSconti;
     }
+
+    @Override
+    public boolean doUpdateStato(String code_id, boolean stato) throws SQLException {
+        String query = "UPDATE codice_sconto SET stato = ? WHERE code_id = ?";
+
+        try (Connection con = ds.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setBoolean(1, stato);
+            ps.setString(2, code_id);
+            return ps.executeUpdate() > 0;
+        }
+    }
 }
