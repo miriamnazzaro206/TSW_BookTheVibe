@@ -32,7 +32,6 @@ public class CodiceScontoDaoImp implements CodiceScontoDao {
         }
     }
 
-    // 2. CANCELLAZIONE LOGICA (SOFT DELETE)
     @Override
     public boolean doDelete(String code_id) throws SQLException {
         // Invece di DELETE FROM, facciamo un UPDATE dello stato
