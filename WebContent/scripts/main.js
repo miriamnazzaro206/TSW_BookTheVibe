@@ -1,14 +1,27 @@
-(async function () {
-  const baseUrl = new URL(".", document.currentScript.src);
-  const [{ addAccessTokens }, { setupValidation }, { setupAjaxFeatures }, { setupAdminInteractions }] = await Promise.all([
-    import(new URL("utils.js", baseUrl)),
-    import(new URL("validation.js", baseUrl)),
-    import(new URL("ajax.js", baseUrl)),
-    import(new URL("admin-interactions.js", baseUrl))
-  ]);
+(function () {
+  var currentScript = document.currentScript;
+  var baseUrl = currentScript ? currentScript.src.replace(/[^/]+$/, "") : "";
+  var scripts = ["utils.js", "validation.js", "ajax.js", "admin-interactions.js"];
 
-  addAccessTokens();
-  setupValidation();
-  setupAjaxFeatures();
-  setupAdminInteractions();
+  function loadScript(index) {
+    if (index >= scripts.length) {
+      init();
+      return;
+    }
+    var script = document.createElement("script");
+    script.src = baseUrl + scripts[index];
+    script.onload = function () {
+      loadScript(index + 1);
+    };
+    document.head.appendChild(script);
+  }
+
+  function init() {
+    if (window.BTV.addAccessTokens) window.BTV.addAccessTokens();
+    if (window.BTV.setupValidation) window.BTV.setupValidation();
+    if (window.BTV.setupAjaxFeatures) window.BTV.setupAjaxFeatures();
+    if (window.BTV.setupAdminInteractions) window.BTV.setupAdminInteractions();
+  }
+
+  loadScript(0);
 })();

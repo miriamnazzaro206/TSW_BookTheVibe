@@ -1,37 +1,41 @@
-function setupOrderFilters() {
-  const orderFilters = document.getElementById("orderFilters");
-  if (!orderFilters) return;
+(function () {
+  window.BTV = window.BTV || {};
 
-  const select = orderFilters.querySelector("select[name='filtro']");
-  const update = () => {
-    const mode = select.value;
-    orderFilters.querySelectorAll(".filter-date").forEach((el) => {
-      el.style.display = mode === "date" ? "block" : "none";
-      el.required = mode === "date";
-    });
-    orderFilters.querySelectorAll(".filter-user").forEach((el) => {
-      el.style.display = mode === "utente" ? "block" : "none";
-      el.required = mode === "utente";
-    });
-  };
-  select.addEventListener("change", update);
-  update();
-}
+  function setupOrderFilters() {
+    var orderFilters = document.getElementById("orderFilters");
+    if (!orderFilters) return;
 
-function setupTableSearch() {
-  document.querySelectorAll("[data-table-search]").forEach((input) => {
-    const table = document.querySelector(input.dataset.tableSearch);
-    if (!table) return;
-    input.addEventListener("input", () => {
-      const needle = input.value.trim().toLowerCase();
-      table.querySelectorAll("tbody tr").forEach((row) => {
-        row.hidden = needle !== "" && !row.textContent.toLowerCase().includes(needle);
+    var select = orderFilters.querySelector("select[name='filtro']");
+    var update = function () {
+      var mode = select.value;
+      Array.prototype.forEach.call(orderFilters.querySelectorAll(".filter-date"), function (el) {
+        el.style.display = mode === "date" ? "block" : "none";
+        el.required = mode === "date";
+      });
+      Array.prototype.forEach.call(orderFilters.querySelectorAll(".filter-user"), function (el) {
+        el.style.display = mode === "utente" ? "block" : "none";
+        el.required = mode === "utente";
+      });
+    };
+    select.addEventListener("change", update);
+    update();
+  }
+
+  function setupTableSearch() {
+    Array.prototype.forEach.call(document.querySelectorAll("[data-table-search]"), function (input) {
+      var table = document.querySelector(input.getAttribute("data-table-search"));
+      if (!table) return;
+      input.addEventListener("input", function () {
+        var needle = input.value.trim().toLowerCase();
+        Array.prototype.forEach.call(table.querySelectorAll("tbody tr"), function (row) {
+          row.hidden = needle !== "" && row.textContent.toLowerCase().indexOf(needle) === -1;
+        });
       });
     });
-  });
-}
+  }
 
-export function setupAdminInteractions() {
-  setupOrderFilters();
-  setupTableSearch();
-}
+  window.BTV.setupAdminInteractions = function () {
+    setupOrderFilters();
+    setupTableSearch();
+  };
+})();

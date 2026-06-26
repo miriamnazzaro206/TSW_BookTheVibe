@@ -35,3 +35,70 @@
 	margin: 0 0 1rem;
 	font-weight: 700;
 }
+
+.admin-catalog-table {
+	min-width: 1500px;
+}
+
+.admin-catalog-table th,
+.admin-catalog-table td {
+	padding: 1rem 1.15rem;
+	vertical-align: top;
+}
+
+.admin-catalog-table th:nth-child(1),
+.admin-catalog-table td:nth-child(1) {
+	width: 110px;
+}
+
+.admin-catalog-table th:nth-child(2),
+.admin-catalog-table td:nth-child(2) {
+	min-width: 220px;
+}
+
+.admin-catalog-table th:nth-child(3),
+.admin-catalog-table td:nth-child(3) {
+	min-width: 130px;
+}
+
+.admin-catalog-table th:nth-child(4),
+.admin-catalog-table td:nth-child(4),
+.admin-catalog-table th:nth-child(5),
+.admin-catalog-table td:nth-child(5) {
+	min-width: 95px;
+}
+
+.admin-catalog-table th:nth-child(6),
+.admin-catalog-table td:nth-child(6) {
+	min-width: 135px;
+}
+
+.catalog-status-form,
+.catalog-edit-form,
+.catalog-date-form {
+	display: grid;
+	gap: 0.6rem;
+	align-items: stretch;
+}
+
+.catalog-status-form {
+	min-width: 104px;
+}
+
+.catalog-edit-form {
+	grid-template-columns: minmax(110px, 0.65fr) minmax(240px, 1.35fr) auto;
+	min-width: 520px;
+}
+
+.catalog-date-form {
+	grid-template-columns: minmax(260px, 1fr) minmax(100px, 0.35fr);
+	min-width: 400px;
+}
+
+.catalog-date-form button {
+	grid-column: 1 / -1;
+}
+
+.admin-catalog-table .inline-form input {
+	max-width: none;
+}

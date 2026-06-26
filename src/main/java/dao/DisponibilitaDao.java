@@ -11,6 +11,8 @@ public interface DisponibilitaDao {
 	public void doSave(DisponibilitaBean disponibilita) throws SQLException;
 	
 	public boolean doUpdatePostiRimanenti(int attivita_id, LocalDate data_attivita, int bigliettiAcquistati) throws SQLException;
+
+	public boolean doUpsert(DisponibilitaBean disponibilita) throws SQLException;
 	
 	public ArrayList<DisponibilitaBean> doRetrieveByKey(int id_attivita) throws SQLException;
 

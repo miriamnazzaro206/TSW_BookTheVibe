@@ -50,6 +50,9 @@ public class AdminCatalogoServlet extends BaseServlet {
 				int id = Integer.parseInt(request.getParameter("id"));
 				attivitaDao.doUpdatePrezzo(id, Double.parseDouble(request.getParameter("prezzo")));
 				attivitaDao.doUpdateDescrizione(id, request.getParameter("descrizione"));
+			} else if ("date".equals(action)) {
+				salvaNuoveDate(Integer.parseInt(request.getParameter("id")), request.getParameter("date_evento"),
+						request.getParameter("posti_nuove_date"));
 			} else {
 				int id = attivitaDao.doSaveAndReturnId(buildAttivita(request));
 				DisponibilitaDaoImp disponibilitaDao = new DisponibilitaDaoImp(getDataSource());
@@ -86,5 +89,16 @@ public class AdminCatalogoServlet extends BaseServlet {
 		attivita.setPrezzo_unitario(Double.parseDouble(request.getParameter("prezzo_unitario")));
 		attivita.setStato(true);
 		return attivita;
+	}
+
+	private void salvaNuoveDate(int attivitaId, String dateEvento, String postiNuoveDate) throws SQLException {
+		if (postiNuoveDate == null || postiNuoveDate.trim().isEmpty()) {
+			return;
+		}
+		DisponibilitaDaoImp disponibilitaDao = new DisponibilitaDaoImp(getDataSource());
+		int posti = Integer.parseInt(postiNuoveDate.trim());
+		for (String data : splitCsvValues(dateEvento)) {
+			disponibilitaDao.doUpsert(new DisponibilitaBean(attivitaId, LocalDate.parse(data), posti));
+		}
 	}
 }
