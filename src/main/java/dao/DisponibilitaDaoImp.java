@@ -58,6 +58,20 @@ public class DisponibilitaDaoImp implements DisponibilitaDao{
 		}
 		
 	}
+
+	public boolean doUpsert(DisponibilitaBean disponibilita) throws SQLException {
+		String sql = "INSERT INTO " + TABLE_NAME
+				+ " (attivita_id, data_evento, posti_rimanenti) VALUES (?, ?, ?) "
+				+ "ON DUPLICATE KEY UPDATE posti_rimanenti = VALUES(posti_rimanenti)";
+
+		try (Connection con = ds.getConnection();
+			 PreparedStatement ps = con.prepareStatement(sql)) {
+			ps.setInt(1, disponibilita.getAttivita_id());
+			ps.setDate(2, java.sql.Date.valueOf(disponibilita.getData_evento()));
+			ps.setInt(3, disponibilita.getPosti_rimanenti());
+			return ps.executeUpdate() > 0;
+		}
+	}
 	
 	public ArrayList<DisponibilitaBean> doRetrieveByKey(int id_attivita) throws SQLException{
 		ArrayList<DisponibilitaBean> listaDisponibilita = new ArrayList<>();
@@ -90,3 +104,4 @@ public class DisponibilitaDaoImp implements DisponibilitaDao{
 	
 
 }
+
