@@ -49,21 +49,13 @@ public class AttivitaServlet extends BaseServlet {
 			int id = Integer.parseInt(request.getParameter("id"));
 			int quantita = Integer.parseInt(request.getParameter("quantita"));
 			LocalDate data = LocalDate.parse(request.getParameter("dataEvento"));
-			DisponibilitaDaoImp disponibilitaDao = new DisponibilitaDaoImp(getDataSource());
-			boolean disponibile = false;
-			for (DisponibilitaBean d : disponibilitaDao.doRetrieveByKey(id)) {
-				if (d.getData_evento().equals(data) && d.getPosti_rimanenti() >= quantita && quantita > 0) {
-					disponibile = true;
-					break;
-				}
-			}
-			if (!disponibile) {
-				response.sendRedirect(request.getContextPath() + "/attivita?id=" + id);
+			if (!hasPostiDisponibili(id, data, quantita)) {
+				redirect(request, response, "/attivita?id=" + id);
 				return;
 			}
 			AttivitaBean attivita = new AttivitaDaoImp(getDataSource()).doRetrieveByKey(id);
 			getCarrello(request).aggiungi(new ElementoCarrelloBean(attivita, data, quantita));
-			response.sendRedirect(request.getContextPath() + "/carrello");
+			redirect(request, response, "/carrello");
 		} catch (SQLException | NumberFormatException e) {
 			throw new ServletException(e);
 		}

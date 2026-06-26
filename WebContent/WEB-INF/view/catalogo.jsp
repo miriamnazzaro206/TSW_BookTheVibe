@@ -14,9 +14,6 @@
 <main class="section">
 	<h1><%=request.getAttribute("filtro")%></h1>
 	<section class="catalog-toolbar" id="catalogToolbar" data-url="<%=request.getContextPath()%>/catalogo/filtra" data-context="<%=request.getContextPath()%>">
-		<label>Ricerca
-			<input type="search" id="catalogSearch" placeholder="Cerca esperienza, agenzia o descrizione">
-		</label>
 		<label>Categoria
 			<select id="catalogCategory">
 				<option value="">Tutte</option>

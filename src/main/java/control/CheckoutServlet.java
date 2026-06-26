@@ -38,40 +38,56 @@ public class CheckoutServlet extends BaseServlet {
 		UtenteBean utente = getUtente(request);
 		CarrelloBean carrello = getCarrello(request);
 		if (carrello.getElementi().isEmpty()) {
-			response.sendRedirect(request.getContextPath() + "/carrello");
+			redirect(request, response, "/carrello");
 			return;
 		}
 		try {
-			utente.setVia(request.getParameter("via"));
-			utente.setCivico(request.getParameter("civico"));
-			utente.setCap(request.getParameter("cap"));
-			utente.setCitta(request.getParameter("citta"));
-			utente.setNazione(request.getParameter("nazione"));
+			aggiornaIndirizzoUtente(request, utente);
 			new UtenteDaoImp(getDataSource()).doUpdate(utente);
-
-			PrenotazioneDaoImp prenotazioneDao = new PrenotazioneDaoImp(getDataSource());
-			DisponibilitaDaoImp disponibilitaDao = new DisponibilitaDaoImp(getDataSource());
-			for (ElementoCarrelloBean elemento : carrello.getElementi()) {
-				PrenotazioneBean prenotazione = new PrenotazioneBean();
-				prenotazione.setUtente_id(utente.getId_utente());
-				prenotazione.setCodice_sconto_id(carrello.getCodiceSconto());
-				prenotazione.setAttivita_id(elemento.getAttivita().getId_attivita());
-				prenotazione.setData_evento(elemento.getDataScelta());
-				prenotazione.setData_prenotazione(LocalDate.now());
-				double prezzoRiga = elemento.getAttivita().getPrezzo_unitario() * elemento.getQuantita();
-				if (carrello.getPercentualeSconto() > 0) {
-					prezzoRiga = prezzoRiga - (prezzoRiga * carrello.getPercentualeSconto() / 100.0);
-				}
-				prenotazione.setPrezzo_tot(prezzoRiga);
-				prenotazione.setStato_pagamento("COMPLETATO");
-				prenotazione.setNum_prenotati(elemento.getQuantita());
-				prenotazioneDao.doSave(prenotazione);
-				disponibilitaDao.doUpdatePostiRimanenti(elemento.getAttivita().getId_attivita(), elemento.getDataScelta(), elemento.getQuantita());
-			}
+			salvaPrenotazioni(carrello, utente);
 			carrello.svuota();
 			forward(request, response, "ordine-successo.jsp");
 		} catch (SQLException e) {
 			throw new ServletException(e);
 		}
+	}
+
+	private void aggiornaIndirizzoUtente(HttpServletRequest request, UtenteBean utente) {
+		utente.setVia(request.getParameter("via"));
+		utente.setCivico(request.getParameter("civico"));
+		utente.setCap(request.getParameter("cap"));
+		utente.setCitta(request.getParameter("citta"));
+		utente.setNazione(request.getParameter("nazione"));
+	}
+
+	private void salvaPrenotazioni(CarrelloBean carrello, UtenteBean utente) throws SQLException {
+		PrenotazioneDaoImp prenotazioneDao = new PrenotazioneDaoImp(getDataSource());
+		DisponibilitaDaoImp disponibilitaDao = new DisponibilitaDaoImp(getDataSource());
+		for (ElementoCarrelloBean elemento : carrello.getElementi()) {
+			prenotazioneDao.doSave(buildPrenotazione(carrello, utente, elemento));
+			disponibilitaDao.doUpdatePostiRimanenti(elemento.getAttivita().getId_attivita(), elemento.getDataScelta(),
+					elemento.getQuantita());
+		}
+	}
+
+	private PrenotazioneBean buildPrenotazione(CarrelloBean carrello, UtenteBean utente, ElementoCarrelloBean elemento) {
+		PrenotazioneBean prenotazione = new PrenotazioneBean();
+		prenotazione.setUtente_id(utente.getId_utente());
+		prenotazione.setCodice_sconto_id(carrello.getCodiceSconto());
+		prenotazione.setAttivita_id(elemento.getAttivita().getId_attivita());
+		prenotazione.setData_evento(elemento.getDataScelta());
+		prenotazione.setData_prenotazione(LocalDate.now());
+		prenotazione.setPrezzo_tot(calcolaPrezzoRiga(carrello, elemento));
+		prenotazione.setStato_pagamento("COMPLETATO");
+		prenotazione.setNum_prenotati(elemento.getQuantita());
+		return prenotazione;
+	}
+
+	private double calcolaPrezzoRiga(CarrelloBean carrello, ElementoCarrelloBean elemento) {
+		double prezzoRiga = elemento.getAttivita().getPrezzo_unitario() * elemento.getQuantita();
+		if (carrello.getPercentualeSconto() > 0) {
+			prezzoRiga = prezzoRiga - (prezzoRiga * carrello.getPercentualeSconto() / 100.0);
+		}
+		return prezzoRiga;
 	}
 }

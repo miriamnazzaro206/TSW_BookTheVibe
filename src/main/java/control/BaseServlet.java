@@ -1,18 +1,21 @@
 package control;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.UUID;
 
 import javax.sql.DataSource;
 
 import dao.AttivitaDaoImp;
+import dao.DisponibilitaDaoImp;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.CarrelloBean;
+import model.DisponibilitaBean;
 import model.UtenteBean;
 
 public abstract class BaseServlet extends HttpServlet {
@@ -60,6 +63,11 @@ public abstract class BaseServlet extends HttpServlet {
 		request.getRequestDispatcher("/WEB-INF/view/" + view).forward(request, response);
 	}
 
+	protected void redirect(HttpServletRequest request, HttpServletResponse response, String path)
+			throws java.io.IOException {
+		response.sendRedirect(request.getContextPath() + path);
+	}
+
 	protected CarrelloBean getCarrello(HttpServletRequest request) {
 		HttpSession session = request.getSession(true);
 		CarrelloBean carrello = (CarrelloBean) session.getAttribute("carrello");
@@ -76,7 +84,7 @@ public abstract class BaseServlet extends HttpServlet {
 
 	protected boolean requireUser(HttpServletRequest request, HttpServletResponse response) throws java.io.IOException {
 		if (getUtente(request) == null) {
-			response.sendRedirect(request.getContextPath() + "/LoginServlet");
+			redirect(request, response, "/LoginServlet");
 			return false;
 		}
 		return true;
@@ -85,10 +93,31 @@ public abstract class BaseServlet extends HttpServlet {
 	protected boolean requireAdmin(HttpServletRequest request, HttpServletResponse response) throws java.io.IOException {
 		UtenteBean utente = getUtente(request);
 		if (utente == null || !"ADMIN".equalsIgnoreCase(utente.getRuolo())) {
-			response.sendRedirect(request.getContextPath() + "/LoginServlet");
+			redirect(request, response, "/LoginServlet");
 			return false;
 		}
 		return true;
+	}
+
+	protected boolean hasPostiDisponibili(int id, LocalDate data, int quantita) throws SQLException {
+		if (quantita <= 0) {
+			return false;
+		}
+		for (DisponibilitaBean disponibilita : new DisponibilitaDaoImp(getDataSource()).doRetrieveByKey(id)) {
+			if (disponibilita.getData_evento().equals(data) && disponibilita.getPosti_rimanenti() >= quantita) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	protected String formatDecimal(double value) {
+		return String.format("%.2f", value).replace(",", ".");
+	}
+
+	protected void writeJson(HttpServletResponse response, String json) throws java.io.IOException {
+		response.setContentType("application/json");
+		response.getWriter().write(json);
 	}
 
 	protected ArrayList<String> splitCsvValues(String value) {

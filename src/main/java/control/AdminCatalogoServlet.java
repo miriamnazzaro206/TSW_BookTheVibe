@@ -54,24 +54,9 @@ public class AdminCatalogoServlet extends BaseServlet {
 				salvaNuoveDate(Integer.parseInt(request.getParameter("id")), request.getParameter("date_evento"),
 						request.getParameter("posti_nuove_date"));
 			} else {
-				int id = attivitaDao.doSaveAndReturnId(buildAttivita(request));
-				DisponibilitaDaoImp disponibilitaDao = new DisponibilitaDaoImp(getDataSource());
-				for (String data : splitCsvValues(request.getParameter("date_evento"))) {
-					disponibilitaDao.doSave(new DisponibilitaBean(id, LocalDate.parse(data), Integer.parseInt(request.getParameter("capacita_massima"))));
-				}
-				ImmagineDaoImp immagineDao = new ImmagineDaoImp(getDataSource());
-				for (Part part : request.getParts()) {
-					if ("foto".equals(part.getName()) && part.getSize() > 0) {
-						ImmagineBean img = new ImmagineBean();
-						img.setAttivita_id(id);
-						img.setFormato(part.getContentType());
-						img.setDati_immagine(part.getInputStream().readAllBytes());
-						img.setTesto_alternativo(request.getParameter("titolo"));
-						immagineDao.doSave(img);
-					}
-				}
+				inserisciAttivita(request, attivitaDao);
 			}
-			response.sendRedirect(request.getContextPath() + "/admin/catalogo");
+			redirect(request, response, "/admin/catalogo");
 		} catch (SQLException e) {
 			throw new ServletException(e);
 		}
@@ -89,6 +74,40 @@ public class AdminCatalogoServlet extends BaseServlet {
 		attivita.setPrezzo_unitario(Double.parseDouble(request.getParameter("prezzo_unitario")));
 		attivita.setStato(true);
 		return attivita;
+	}
+
+	private void inserisciAttivita(HttpServletRequest request, AttivitaDaoImp attivitaDao)
+			throws SQLException, IOException, ServletException {
+		int id = attivitaDao.doSaveAndReturnId(buildAttivita(request));
+		salvaDateIniziali(id, request.getParameter("date_evento"), request.getParameter("capacita_massima"));
+		salvaImmagini(id, request);
+	}
+
+	private void salvaDateIniziali(int attivitaId, String dateEvento, String capacitaMassima) throws SQLException {
+		DisponibilitaDaoImp disponibilitaDao = new DisponibilitaDaoImp(getDataSource());
+		int posti = Integer.parseInt(capacitaMassima);
+		for (String data : splitCsvValues(dateEvento)) {
+			disponibilitaDao.doSave(new DisponibilitaBean(attivitaId, LocalDate.parse(data), posti));
+		}
+	}
+
+	private void salvaImmagini(int attivitaId, HttpServletRequest request)
+			throws IOException, ServletException, SQLException {
+		ImmagineDaoImp immagineDao = new ImmagineDaoImp(getDataSource());
+		for (Part part : request.getParts()) {
+			if ("foto".equals(part.getName()) && part.getSize() > 0) {
+				immagineDao.doSave(buildImmagine(attivitaId, request.getParameter("titolo"), part));
+			}
+		}
+	}
+
+	private ImmagineBean buildImmagine(int attivitaId, String titolo, Part part) throws IOException {
+		ImmagineBean img = new ImmagineBean();
+		img.setAttivita_id(attivitaId);
+		img.setFormato(part.getContentType());
+		img.setDati_immagine(part.getInputStream().readAllBytes());
+		img.setTesto_alternativo(titolo);
+		return img;
 	}
 
 	private void salvaNuoveDate(int attivitaId, String dateEvento, String postiNuoveDate) throws SQLException {

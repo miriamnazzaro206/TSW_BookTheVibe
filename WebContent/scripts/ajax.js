@@ -132,16 +132,13 @@
   function setupCatalogAjax() {
     var toolbar = document.getElementById("catalogToolbar");
     var grid;
-    var search;
     var category;
     var city;
     var count;
     var contextPath;
-    var debouncedLoad;
     if (!toolbar) return;
 
     grid = document.getElementById("catalogGrid");
-    search = document.getElementById("catalogSearch");
     category = document.getElementById("catalogCategory");
     city = document.getElementById("catalogCity");
     count = document.getElementById("catalogCount");
@@ -149,7 +146,7 @@
 
     function loadCatalog() {
       var params = new URLSearchParams();
-      params.set("q", search.value.trim());
+      params.set("q", "");
       params.set("categoria", category.value);
       params.set("citta", city.value);
       grid.classList.add("is-loading");
@@ -181,8 +178,6 @@
         });
     }
 
-    debouncedLoad = window.BTV.debounce(loadCatalog, 280);
-    search.addEventListener("input", debouncedLoad);
     category.addEventListener("change", loadCatalog);
     city.addEventListener("change", loadCatalog);
     count.textContent = grid.querySelectorAll(".activity-card").length + " risultati";

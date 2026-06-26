@@ -27,9 +27,6 @@
 		<input type="file" name="foto" accept="image/*" multiple>
 		<button class="primary" type="submit">Inserisci attivita</button>
 	</form>
-	<label class="table-search">Cerca nel catalogo
-		<input type="search" data-table-search="#catalogAdminTable" placeholder="Nome, categoria, stato">
-	</label>
 	<% ArrayList<AttivitaBean> attivita = (ArrayList<AttivitaBean>) request.getAttribute("attivita"); %>
 	<div class="table-wrap">
 		<table id="catalogAdminTable" class="admin-catalog-table">

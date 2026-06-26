@@ -19,9 +19,6 @@
 		<input type="number" min="1" max="100" step="0.01" name="percentuale" placeholder="Percentuale" required><span class="error"></span>
 		<button class="primary" type="submit">Aggiungi Codice sconto</button>
 	</form>
-	<label class="table-search">Cerca coupon
-		<input type="search" data-table-search="#couponAdminTable" placeholder="Codice o stato">
-	</label>
 	<% ArrayList<CodiceScontoBean> coupon = (ArrayList<CodiceScontoBean>) request.getAttribute("coupon"); %>
 	<div class="table-wrap">
 		<table id="couponAdminTable">

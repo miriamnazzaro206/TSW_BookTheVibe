@@ -5,14 +5,12 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 import dao.CodiceScontoDaoImp;
-import dao.DisponibilitaDaoImp;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.CarrelloBean;
 import model.CodiceScontoBean;
-import model.DisponibilitaBean;
 import model.ElementoCarrelloBean;
 
 @WebServlet("/carrello")
@@ -40,16 +38,36 @@ public class CarrelloServlet extends BaseServlet {
 		} else if ("rimuovi".equals(action)) {
 			carrello.rimuovi(Integer.parseInt(request.getParameter("id")), LocalDate.parse(request.getParameter("data")));
 		} else if ("aggiorna".equals(action)) {
-			int id = Integer.parseInt(request.getParameter("id"));
-			LocalDate data = LocalDate.parse(request.getParameter("data"));
-			int quantita = Integer.parseInt(request.getParameter("quantita"));
+			if (aggiornaQuantita(request, response, carrello)) {
+				return;
+			}
+		}
+		redirect(request, response, "/carrello");
+	}
+
+	private boolean isAjax(HttpServletRequest request) {
+		return "true".equals(request.getParameter("ajax"));
+	}
+
+	private void writeCartJson(HttpServletResponse response, boolean valid, CarrelloBean carrello, String message)
+			throws IOException {
+		writeJson(response, "{\"valid\":" + valid + ",\"message\":\"" + message + "\",\"totale\":\""
+				+ formatDecimal(carrello.getPrezzoScontato()) + "\"}");
+	}
+
+	private boolean aggiornaQuantita(HttpServletRequest request, HttpServletResponse response, CarrelloBean carrello)
+			throws IOException, ServletException {
+		int id = Integer.parseInt(request.getParameter("id"));
+		LocalDate data = LocalDate.parse(request.getParameter("data"));
+		int quantita = Integer.parseInt(request.getParameter("quantita"));
+		try {
 			if (!hasPostiDisponibili(id, data, quantita)) {
 				if (isAjax(request)) {
 					writeCartJson(response, false, carrello, "Quantita non disponibile");
-					return;
+					return true;
 				}
-				response.sendRedirect(request.getContextPath() + "/carrello");
-				return;
+				redirect(request, response, "/carrello");
+				return true;
 			}
 			for (ElementoCarrelloBean elemento : carrello.getElementi()) {
 				if (elemento.getAttivita().getId_attivita() == id && elemento.getDataScelta().equals(data)) {
@@ -59,32 +77,7 @@ public class CarrelloServlet extends BaseServlet {
 			}
 			if (isAjax(request)) {
 				writeCartJson(response, true, carrello, "Quantita aggiornata");
-				return;
-			}
-		}
-		response.sendRedirect(request.getContextPath() + "/carrello");
-	}
-
-	private boolean isAjax(HttpServletRequest request) {
-		return "true".equals(request.getParameter("ajax"));
-	}
-
-	private void writeCartJson(HttpServletResponse response, boolean valid, CarrelloBean carrello, String message)
-			throws IOException {
-		response.setContentType("application/json");
-		response.getWriter().write("{\"valid\":" + valid + ",\"message\":\"" + message + "\",\"totale\":\""
-				+ String.format("%.2f", carrello.getPrezzoScontato()).replace(",", ".") + "\"}");
-	}
-
-	private boolean hasPostiDisponibili(int id, LocalDate data, int quantita) throws ServletException {
-		if (quantita <= 0) {
-			return false;
-		}
-		try {
-			for (DisponibilitaBean disponibilita : new DisponibilitaDaoImp(getDataSource()).doRetrieveByKey(id)) {
-				if (disponibilita.getData_evento().equals(data) && disponibilita.getPosti_rimanenti() >= quantita) {
-					return true;
-				}
+				return true;
 			}
 			return false;
 		} catch (SQLException e) {
@@ -94,10 +87,9 @@ public class CarrelloServlet extends BaseServlet {
 
 	private void applySconto(HttpServletRequest request, HttpServletResponse response, CarrelloBean carrello)
 			throws IOException, ServletException {
-		response.setContentType("application/json");
 		String codice = request.getParameter("codice");
 		if (codice == null || codice.trim().isEmpty()) {
-			response.getWriter().write("{\"valid\":false,\"message\":\"Inserisci un codice sconto\"}");
+			writeJson(response, "{\"valid\":false,\"message\":\"Inserisci un codice sconto\"}");
 			return;
 		}
 		try {
@@ -105,9 +97,9 @@ public class CarrelloServlet extends BaseServlet {
 			if (sconto != null && sconto.getStato()) {
 				carrello.setCodiceSconto(sconto.getCode_id());
 				carrello.setPercentualeSconto(sconto.getPercentuale());
-				response.getWriter().write("{\"valid\":true,\"totale\":\"" + String.format("%.2f", carrello.getPrezzoScontato()).replace(",", ".") + "\"}");
+				writeJson(response, "{\"valid\":true,\"totale\":\"" + formatDecimal(carrello.getPrezzoScontato()) + "\"}");
 			} else {
-				response.getWriter().write("{\"valid\":false,\"message\":\"Codice non valido o non attivo\"}");
+				writeJson(response, "{\"valid\":false,\"message\":\"Codice non valido o non attivo\"}");
 			}
 		} catch (SQLException e) {
 			throw new ServletException(e);
