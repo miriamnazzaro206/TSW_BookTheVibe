@@ -17,7 +17,7 @@ import model.AttivitaBean;
 import model.DisponibilitaBean;
 import model.ElementoCarrelloBean;
 
-@WebServlet("/attivita")
+@WebServlet("/common/attivita")
 public class AttivitaServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -50,12 +50,12 @@ public class AttivitaServlet extends BaseServlet {
 			int quantita = Integer.parseInt(request.getParameter("quantita"));
 			LocalDate data = LocalDate.parse(request.getParameter("dataEvento"));
 			if (!hasPostiDisponibili(id, data, quantita)) {
-				redirect(request, response, "/attivita?id=" + id);
+				redirect(request, response, "/common/attivita?id=" + id);
 				return;
 			}
 			AttivitaBean attivita = new AttivitaDaoImp(getDataSource()).doRetrieveByKey(id);
 			getCarrello(request).aggiungi(new ElementoCarrelloBean(attivita, data, quantita));
-			redirect(request, response, "/carrello");
+			redirect(request, response, "/common/carrello");
 		} catch (SQLException | NumberFormatException e) {
 			throw new ServletException(e);
 		}

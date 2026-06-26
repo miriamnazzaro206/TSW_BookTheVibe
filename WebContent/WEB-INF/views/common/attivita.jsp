@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList,model.AttivitaBean,model.DisponibilitaBean,model.RecensioneBean" %>
 <!DOCTYPE html>
 <html>
@@ -10,7 +10,7 @@
 <script defer src="<%=request.getContextPath()%>/scripts/main.js"></script>
 </head>
 <body>
-<%@ include file="navbar.jsp" %>
+<%@ include file="/WEB-INF/views/common/navbar.jsp" %>
 <%
 AttivitaBean a = (AttivitaBean) request.getAttribute("attivita");
 ArrayList<DisponibilitaBean> disponibilita = (ArrayList<DisponibilitaBean>) request.getAttribute("disponibilita");
@@ -32,9 +32,9 @@ ArrayList<RecensioneBean> recensioni = (ArrayList<RecensioneBean>) request.getAt
 			<p class="muted">Non ci sono ancora recensioni per questa attivita.</p>
 		<% } %>
 	</section>
-	<aside class="booking-panel" data-availability-url="<%=request.getContextPath()%>/disponibilita/controlla" data-attivita-id="<%=a.getId_attivita()%>">
+	<aside class="booking-panel" data-availability-url="<%=request.getContextPath()%>/common/disponibilita/controlla" data-attivita-id="<%=a.getId_attivita()%>">
 		<h2>&euro; <%=String.format("%.2f", a.getPrezzo_unitario())%></h2>
-		<form method="post" action="<%=request.getContextPath()%>/attivita" class="validated-form">
+		<form method="post" action="<%=request.getContextPath()%>/common/attivita" class="validated-form">
 			<input type="hidden" name="id" value="<%=a.getId_attivita()%>">
 			<label>Data
 				<select name="dataEvento" id="dataEvento" required>

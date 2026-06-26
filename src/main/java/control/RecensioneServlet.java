@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.RecensioneBean;
 
-@WebServlet("/recensione")
+@WebServlet("/common/recensione")
 public class RecensioneServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -48,7 +48,7 @@ public class RecensioneServlet extends BaseServlet {
 				recensione.setData_recensione(LocalDate.now());
 				dao.doSave(recensione);
 			}
-			response.sendRedirect(request.getContextPath() + "/prenotazioni");
+			redirect(request, response, "/common/prenotazioni");
 		} catch (SQLException e) {
 			throw new ServletException(e);
 		}

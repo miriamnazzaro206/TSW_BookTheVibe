@@ -1,4 +1,4 @@
-<%@ page import="model.UtenteBean,java.util.ArrayList" %>
+﻿<%@ page import="model.UtenteBean,java.util.ArrayList" %>
 <%
 UtenteBean utenteNav = (UtenteBean) session.getAttribute("utenteLoggato");
 boolean isAdminNav = utenteNav != null && "ADMIN".equalsIgnoreCase(utenteNav.getRuolo());
@@ -9,13 +9,13 @@ String accessToken = (String) session.getAttribute("accessToken");
 %>
 <script>window.BTV_ACCESS_TOKEN = "<%=accessToken == null ? "" : accessToken%>";</script>
 <nav class="topbar">
-	<a class="brand" href="<%=ctx%>/home">BookTheVibe</a>
+	<a class="brand" href="<%=ctx%>/common/home">BookTheVibe</a>
 	<div class="nav-left">
 		<div class="dropdown">
 			<button type="button">Categorie</button>
 			<div class="dropdown-menu">
 				<% if (categorieNav != null) for (String categoria : categorieNav) { %>
-					<a href="<%=ctx%>/catalogo?categoria=<%=java.net.URLEncoder.encode(categoria, "UTF-8")%>"><%=categoria%></a>
+					<a href="<%=ctx%>/common/catalogo?categoria=<%=java.net.URLEncoder.encode(categoria, "UTF-8")%>"><%=categoria%></a>
 				<% } %>
 			</div>
 		</div>
@@ -23,15 +23,15 @@ String accessToken = (String) session.getAttribute("accessToken");
 			<button type="button">Citta'</button>
 			<div class="dropdown-menu">
 				<% if (cittaNav != null) for (String citta : cittaNav) { %>
-					<a href="<%=ctx%>/catalogo?citta=<%=java.net.URLEncoder.encode(citta, "UTF-8")%>"><%=citta%></a>
+					<a href="<%=ctx%>/common/catalogo?citta=<%=java.net.URLEncoder.encode(citta, "UTF-8")%>"><%=citta%></a>
 				<% } %>
 			</div>
 		</div>
 	</div>
 	<div class="nav-right">
-		<a href="<%=ctx%>/home">Home</a>
+		<a href="<%=ctx%>/common/home">Home</a>
 		<% if (utenteNav != null) { %>
-			<a href="<%=ctx%>/prenotazioni">Le mie prenotazioni</a>
+			<a href="<%=ctx%>/common/prenotazioni">Le mie prenotazioni</a>
 		<% } %>
 		<% if (isAdminNav) { %>
 			<a href="<%=ctx%>/admin/catalogo">Catalogo</a>
@@ -39,13 +39,13 @@ String accessToken = (String) session.getAttribute("accessToken");
 			<a href="<%=ctx%>/admin/coupon">Codici Sconto</a>
 		<% } %>
 		<% if (utenteNav != null) { %>
-			<a class="icon-link" href="<%=ctx%>/profilo" aria-label="Profilo">&#128100;</a>
+			<a class="icon-link" href="<%=ctx%>/common/profilo" aria-label="Profilo">&#128100;</a>
 		<% } %>
-		<a class="icon-link" href="<%=ctx%>/carrello" aria-label="Carrello">&#128722;</a>
+		<a class="icon-link" href="<%=ctx%>/common/carrello" aria-label="Carrello">&#128722;</a>
 		<% if (utenteNav == null) { %>
-			<a class="icon-link" href="<%=ctx%>/LoginServlet" aria-label="Login">&#128100;</a>
+			<a class="icon-link" href="<%=ctx%>/common/login" aria-label="Login">&#128100;</a>
 		<% } else { %>
-			<a href="<%=ctx%>/logout">Logout</a>
+			<a href="<%=ctx%>/common/logout">Logout</a>
 		<% } %>
 	</div>
 </nav>

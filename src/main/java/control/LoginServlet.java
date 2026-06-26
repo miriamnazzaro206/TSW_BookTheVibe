@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.UtenteBean;
 
-@WebServlet(name = "LoginServlet", urlPatterns = { "/LoginServlet" })
+@WebServlet(name = "LoginServlet", urlPatterns = { "/common/login" })
 public class LoginServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -35,7 +35,7 @@ public class LoginServlet extends BaseServlet {
 				HttpSession session = request.getSession(true);
 				session.setAttribute("utenteLoggato", utente);
 				session.setAttribute("isAdmin", Boolean.valueOf("ADMIN".equalsIgnoreCase(utente.getRuolo())));
-				response.sendRedirect(request.getContextPath() + "/home");
+				redirect(request, response, "/common/home");
 				return;
 			}
 

@@ -1,13 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Registrazione</title><link rel="stylesheet" href="<%=request.getContextPath()%>/styles/main.css"><script defer src="<%=request.getContextPath()%>/scripts/main.js"></script></head>
 <body>
-<%@ include file="navbar.jsp" %>
+<%@ include file="/WEB-INF/views/common/navbar.jsp" %>
 <main class="section narrow">
 	<h1>Registrazione</h1>
 	<% if (request.getAttribute("errorMessage") != null) { %><p class="error visible"><%=request.getAttribute("errorMessage")%></p><% } %>
-	<form method="post" action="<%=request.getContextPath()%>/registrazione" class="form-grid validated-form">
+	<form method="post" action="<%=request.getContextPath()%>/common/registrazione" class="form-grid validated-form">
 		<input name="nome" placeholder="Nome" required><span class="error"></span>
 		<input name="cognome" placeholder="Cognome" required><span class="error"></span>
 		<input type="email" name="email" placeholder="Email" data-pattern="email" required><span class="error"></span>

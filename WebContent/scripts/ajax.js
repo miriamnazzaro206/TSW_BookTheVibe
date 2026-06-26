@@ -1,11 +1,11 @@
-(function () {
+﻿(function () {
   window.BTV = window.BTV || {};
 
   function renderActivityCard(activity, contextPath) {
     var card = document.createElement("a");
     var img;
     card.className = "activity-card";
-    card.href = contextPath + "/attivita?id=" + activity.id;
+    card.href = contextPath + "/common/attivita?id=" + activity.id;
     card.innerHTML = '<img src="' + contextPath + "/image?attivitaId=" + activity.id + '" alt=""><strong></strong><span></span>';
     img = card.querySelector("img");
     img.alt = activity.titolo;

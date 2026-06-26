@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.AttivitaBean;
 
-@WebServlet("/catalogo/filtra")
+@WebServlet("/common/catalogo/filtra")
 public class FiltroCatalogoServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 

@@ -13,7 +13,7 @@ import model.CarrelloBean;
 import model.CodiceScontoBean;
 import model.ElementoCarrelloBean;
 
-@WebServlet("/carrello")
+@WebServlet("/common/carrello")
 public class CarrelloServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -42,7 +42,7 @@ public class CarrelloServlet extends BaseServlet {
 				return;
 			}
 		}
-		redirect(request, response, "/carrello");
+		redirect(request, response, "/common/carrello");
 	}
 
 	private boolean isAjax(HttpServletRequest request) {
@@ -66,7 +66,7 @@ public class CarrelloServlet extends BaseServlet {
 					writeCartJson(response, false, carrello, "Quantita non disponibile");
 					return true;
 				}
-				redirect(request, response, "/carrello");
+				redirect(request, response, "/common/carrello");
 				return true;
 			}
 			for (ElementoCarrelloBean elemento : carrello.getElementi()) {

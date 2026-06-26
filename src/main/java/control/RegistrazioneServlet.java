@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.UtenteBean;
 
-@WebServlet("/registrazione")
+@WebServlet("/common/registrazione")
 public class RegistrazioneServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -26,7 +26,7 @@ public class RegistrazioneServlet extends BaseServlet {
 		try {
 			UtenteBean utente = buildUtente(request);
 			new UtenteDaoImp(getDataSource()).doSave(utente);
-			response.sendRedirect(request.getContextPath() + "/LoginServlet");
+			redirect(request, response, "/common/login");
 		} catch (SQLException e) {
 			request.setAttribute("errorMessage", "Email gia registrata o dati non validi.");
 			forward(request, response, "registrazione.jsp");

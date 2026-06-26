@@ -16,7 +16,7 @@ import model.ElementoCarrelloBean;
 import model.PrenotazioneBean;
 import model.UtenteBean;
 
-@WebServlet("/checkout")
+@WebServlet("/common/checkout")
 public class CheckoutServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -38,7 +38,7 @@ public class CheckoutServlet extends BaseServlet {
 		UtenteBean utente = getUtente(request);
 		CarrelloBean carrello = getCarrello(request);
 		if (carrello.getElementi().isEmpty()) {
-			redirect(request, response, "/carrello");
+			redirect(request, response, "/common/carrello");
 			return;
 		}
 		try {

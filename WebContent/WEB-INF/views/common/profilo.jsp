@@ -1,12 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="model.UtenteBean" %>
 <!DOCTYPE html>
 <html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Profilo</title><link rel="stylesheet" href="<%=request.getContextPath()%>/styles/main.css"><script defer src="<%=request.getContextPath()%>/scripts/main.js"></script></head>
-<body><%@ include file="navbar.jsp" %>
+<body><%@ include file="/WEB-INF/views/common/navbar.jsp" %>
 <% UtenteBean u = (UtenteBean) session.getAttribute("utenteLoggato"); %>
 <main class="section narrow"><h1>Profilo</h1>
 <% if (request.getAttribute("successMessage") != null) { %><p class="success-msg"><%=request.getAttribute("successMessage")%></p><% } %>
-<form method="post" action="<%=request.getContextPath()%>/profilo" class="form-grid validated-form">
+<form method="post" action="<%=request.getContextPath()%>/common/profilo" class="form-grid validated-form">
 	<input name="nome" value="<%=u.getNome()%>" required><span class="error"></span>
 	<input name="cognome" value="<%=u.getCognome()%>" required><span class="error"></span>
 	<input type="email" name="email" value="<%=u.getEmail()%>" data-pattern="email" required><span class="error"></span>

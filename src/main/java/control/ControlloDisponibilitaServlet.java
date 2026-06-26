@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.DisponibilitaBean;
 
-@WebServlet("/disponibilita/controlla")
+@WebServlet("/common/disponibilita/controlla")
 public class ControlloDisponibilitaServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 

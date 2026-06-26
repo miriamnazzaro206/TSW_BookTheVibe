@@ -10,7 +10,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/prenotazioni")
+@WebServlet("/common/prenotazioni")
 public class PrenotazioniServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 

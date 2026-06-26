@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.AttivitaBean;
 
-@WebServlet("/home")
+@WebServlet("/common/home")
 public class HomeServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 

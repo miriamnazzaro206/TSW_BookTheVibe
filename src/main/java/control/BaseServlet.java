@@ -60,7 +60,8 @@ public abstract class BaseServlet extends HttpServlet {
 		} catch (SQLException e) {
 			throw new ServletException(e);
 		}
-		request.getRequestDispatcher("/WEB-INF/view/" + view).forward(request, response);
+		String folder = view.startsWith("admin-") ? "admin" : "common";
+		request.getRequestDispatcher("/WEB-INF/views/" + folder + "/" + view).forward(request, response);
 	}
 
 	protected void redirect(HttpServletRequest request, HttpServletResponse response, String path)
@@ -84,7 +85,7 @@ public abstract class BaseServlet extends HttpServlet {
 
 	protected boolean requireUser(HttpServletRequest request, HttpServletResponse response) throws java.io.IOException {
 		if (getUtente(request) == null) {
-			redirect(request, response, "/LoginServlet");
+			redirect(request, response, "/common/login");
 			return false;
 		}
 		return true;
@@ -93,7 +94,7 @@ public abstract class BaseServlet extends HttpServlet {
 	protected boolean requireAdmin(HttpServletRequest request, HttpServletResponse response) throws java.io.IOException {
 		UtenteBean utente = getUtente(request);
 		if (utente == null || !"ADMIN".equalsIgnoreCase(utente.getRuolo())) {
-			redirect(request, response, "/LoginServlet");
+			redirect(request, response, "/common/login");
 			return false;
 		}
 		return true;

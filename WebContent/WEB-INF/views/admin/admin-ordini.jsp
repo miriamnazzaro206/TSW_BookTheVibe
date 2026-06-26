@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList,model.PrenotazioneBean" %>
 <!DOCTYPE html>
 <html>
@@ -10,7 +10,7 @@
 <script defer src="<%=request.getContextPath()%>/scripts/main.js"></script>
 </head>
 <body>
-<%@ include file="navbar.jsp" %>
+<%@ include file="/WEB-INF/views/common/navbar.jsp" %>
 <main class="section">
 	<h1>Gestione Ordini</h1>
 	<form method="get" action="<%=request.getContextPath()%>/admin/ordini" class="filters" id="orderFilters">

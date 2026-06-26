@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.UtenteBean;
 
-@WebServlet("/profilo")
+@WebServlet("/common/profilo")
 public class ProfiloServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 
