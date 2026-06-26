@@ -35,8 +35,8 @@ button:disabled {
 }
 
 .danger {
-	color: var(--danger);
-	border-color: var(--danger);
+	color: var(--orange);
+	border-color: var(--orange);
 }
 
 input,
@@ -65,7 +65,7 @@ textarea {
 }
 
 .field-error {
-	border-color: var(--danger);
+	border-color: var(--orange);
 	background: color-mix(in srgb, var(--orange) 10%, white);
 }
 
@@ -75,7 +75,7 @@ textarea {
 
 .error {
 	display: none;
-	color: var(--danger);
+	color: var(--orange);
 	font-size: 0.9rem;
 }
 
@@ -127,7 +127,7 @@ textarea {
 }
 
 .activity-card span {
-	color: var(--muted);
+	color: var(--orange);
 	font-size: 0.95rem;
 }
 

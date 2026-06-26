@@ -12,7 +12,7 @@
 		<input type="password" name="txtPwd" placeholder="Password" required><span class="error"></span>
 		<button class="primary" type="submit">Accedi</button>
 	</form>
-	<p>Non hai un account? <a href="<%=request.getContextPath()%>/registrazione">Registrati</a></p>
+	<p>Non hai un account? <a href="<%=request.getContextPath()%>/registrazione"><u>Registrati</u></a></p>
 </main>
 </body>
 </html>

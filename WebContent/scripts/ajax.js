@@ -125,7 +125,6 @@
           });
       }, 350);
       input.addEventListener("change", update);
-      input.addEventListener("input", update);
     });
   }
 
@@ -195,7 +194,7 @@
     message = document.getElementById("availabilityMessage");
     if (!select || !quantity || !message) return;
 
-    function updateAvailability() {
+    function updateAvailability(validateQuantity) {
       var option = select.options[select.selectedIndex];
       var posti = Number(option ? option.getAttribute("data-posti") : 0);
       var params = new URLSearchParams();
@@ -213,18 +212,20 @@
           quantity.max = posti;
           if (Number(quantity.value) > posti) quantity.value = posti;
           message.textContent = posti === 1 ? "Rimane 1 posto disponibile." : "Rimangono " + posti + " posti disponibili.";
-          window.BTV.validateInput(quantity);
+          if (validateQuantity) window.BTV.validateInput(quantity);
         })
         .catch(function () {
           message.textContent = "Disponibilita non aggiornata in tempo reale.";
         });
     }
 
-    select.addEventListener("change", updateAvailability);
-    quantity.addEventListener("input", function () {
+    select.addEventListener("change", function () {
+      updateAvailability(true);
+    });
+    quantity.addEventListener("change", function () {
       window.BTV.validateInput(quantity);
     });
-    updateAvailability();
+    updateAvailability(false);
   }
 
   window.BTV.setupAjaxFeatures = function () {

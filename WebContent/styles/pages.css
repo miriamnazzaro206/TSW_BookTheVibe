@@ -164,7 +164,7 @@
 	gap: 0.35rem;
 	min-width: 112px;
 	font-weight: 700;
-	color: var(--muted);
+	color: var(--orange);
 }
 
 .quantity-control input {

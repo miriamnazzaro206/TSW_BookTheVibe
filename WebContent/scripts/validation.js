@@ -61,9 +61,6 @@
       input.addEventListener("change", function () {
         window.BTV.validateInput(input);
       });
-      input.addEventListener("blur", function () {
-        window.BTV.validateInput(input);
-      });
     });
 
     var forms = document.querySelectorAll(".validated-form");
