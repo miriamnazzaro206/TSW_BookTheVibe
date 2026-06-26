@@ -48,4 +48,4 @@ String accessToken = (String) session.getAttribute("accessToken");
 			<a href="<%=ctx%>/common/logout">Logout</a>
 		<% } %>
 	</div>
-</nav>
+</nav> 
