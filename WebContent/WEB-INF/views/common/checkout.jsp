@@ -21,6 +21,7 @@
 	<strong>Totale: &euro; <%=String.format("%.2f", carrello.getPrezzoScontato())%></strong>
 	</div>
 	<form method="post" action="<%=request.getContextPath()%>/common/checkout" class="form-grid validated-form">
+		<input type="hidden" name="accessToken" value="<%=session.getAttribute("accessToken")%>">
 		<input name="via" value="<%=u.getVia() == null ? "" : u.getVia()%>" placeholder="Via" required><span class="error"></span>
 		<input name="civico" value="<%=u.getCivico() == null ? "" : u.getCivico()%>" placeholder="Civico" required><span class="error"></span>
 		<input name="cap" value="<%=u.getCap() == null ? "" : u.getCap()%>" placeholder="CAP" data-pattern="cap" required><span class="error"></span>
