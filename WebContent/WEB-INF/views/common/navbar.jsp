@@ -5,9 +5,7 @@ boolean isAdminNav = utenteNav != null && "ADMIN".equalsIgnoreCase(utenteNav.get
 ArrayList<String> categorieNav = (ArrayList<String>) request.getAttribute("categorieNav");
 ArrayList<String> cittaNav = (ArrayList<String>) request.getAttribute("cittaNav");
 String ctx = request.getContextPath();
-String accessToken = (String) session.getAttribute("accessToken");
 %>
-<script>window.BTV_ACCESS_TOKEN = "<%=accessToken == null ? "" : accessToken%>";</script>
 <nav class="topbar">
 	<a class="brand" href="<%=ctx%>/common/home">BookTheVibe</a>
 	<div class="nav-left">
@@ -39,13 +37,30 @@ String accessToken = (String) session.getAttribute("accessToken");
 			<a href="<%=ctx%>/admin/coupon">Codici Sconto</a>
 		<% } %>
 		<% if (utenteNav != null) { %>
-			<a class="icon-link" href="<%=ctx%>/common/profilo" aria-label="Profilo">&#128100;</a>
+			<a class="icon-link" href="<%=ctx%>/common/profilo" aria-label="Profilo">
+				<svg viewBox="0 0 24 24" aria-hidden="true">
+					<circle cx="12" cy="8" r="4.2"></circle>
+					<path d="M4.6 20.2c1.2-4 4-6.1 7.4-6.1s6.2 2.1 7.4 6.1"></path>
+				</svg>
+			</a>
 		<% } %>
-		<a class="icon-link" href="<%=ctx%>/common/carrello" aria-label="Carrello">&#128722;</a>
+		<a class="icon-link" href="<%=ctx%>/common/carrello" aria-label="Carrello">
+			<svg viewBox="0 0 24 24" aria-hidden="true">
+				<path d="M6.3 8.2h15l-1.4 8.1a2.2 2.2 0 0 1-2.2 1.9H9a2.2 2.2 0 0 1-2.2-1.9L5 4H2.8"></path>
+				<path d="M9.2 11.5h8.9"></path>
+				<circle cx="9.6" cy="21" r="1.25"></circle>
+				<circle cx="17.7" cy="21" r="1.25"></circle>
+			</svg>
+		</a>
 		<% if (utenteNav == null) { %>
-			<a class="icon-link" href="<%=ctx%>/common/login" aria-label="Login">&#128100;</a>
+			<a class="icon-link" href="<%=ctx%>/common/login" aria-label="Login">
+				<svg viewBox="0 0 24 24" aria-hidden="true">
+					<circle cx="12" cy="8" r="4.2"></circle>
+					<path d="M4.6 20.2c1.2-4 4-6.1 7.4-6.1s6.2 2.1 7.4 6.1"></path>
+				</svg>
+			</a>
 		<% } else { %>
 			<a href="<%=ctx%>/common/logout">Logout</a>
 		<% } %>
 	</div>
-</nav> 
+</nav>
