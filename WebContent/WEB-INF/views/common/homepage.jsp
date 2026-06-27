@@ -29,7 +29,7 @@
 		</div>
 	</section>
 	<section class="section">
-		<h2>Attivita disponibili</h2>
+		<h2>Attivita' disponibili</h2>
 		<div class="activity-strip">
 			<%
 			ArrayList<AttivitaBean> attivita = (ArrayList<AttivitaBean>) request.getAttribute("attivita");
