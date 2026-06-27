@@ -11,7 +11,7 @@
 	<input name="cognome" value="<%=u.getCognome()%>" required><span class="error"></span>
 	<input type="email" name="email" value="<%=u.getEmail()%>" data-pattern="email" required><span class="error"></span>
 	<input type="password" name="password" value="<%=u.getPassword()%>" data-pattern="password" required><span class="error"></span>
-	<input type="date" name="data_nascita" value="<%=u.getData_nascita() == null ? "" : u.getData_nascita()%>"><span class="error"></span>
+	<input type="date" name="data_nascita" min="1900-01-01" max="<%=java.time.LocalDate.now()%>" value="<%=u.getData_nascita() == null ? "" : u.getData_nascita()%>"><span class="error"></span>
 	<input name="cellulare" value="<%=u.getCellulare() == null ? "" : u.getCellulare()%>" data-pattern="phone"><span class="error"></span>
 	<input name="via" value="<%=u.getVia() == null ? "" : u.getVia()%>"><span class="error"></span>
 	<input name="civico" value="<%=u.getCivico() == null ? "" : u.getCivico()%>"><span class="error"></span>

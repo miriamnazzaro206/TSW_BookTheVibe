@@ -12,7 +12,7 @@
 		<input name="cognome" placeholder="Cognome" required><span class="error"></span>
 		<input type="email" name="email" placeholder="Email" data-pattern="email" required><span class="error"></span>
 		<input type="password" name="password" placeholder="Password" data-pattern="password" required><span class="error"></span>
-		<input type="date" name="data_nascita" required><span class="error"></span>
+		<input type="date" name="data_nascita" min="1900-01-01" max="<%=java.time.LocalDate.now()%>" required><span class="error"></span>
 		<input name="cellulare" placeholder="Cellulare" data-pattern="phone" required><span class="error"></span>
 		<input name="via" placeholder="Via" required><span class="error"></span>
 		<input name="civico" placeholder="Civico" required><span class="error"></span>
