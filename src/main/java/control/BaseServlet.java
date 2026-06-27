@@ -3,7 +3,6 @@ package control;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.UUID;
 
 import javax.sql.DataSource;
 
@@ -26,31 +25,9 @@ public abstract class BaseServlet extends HttpServlet {
 	}
 
 	protected void loadNavbar(HttpServletRequest request) throws SQLException {
-		getAccessToken(request);
 		AttivitaDaoImp attivitaDao = new AttivitaDaoImp(getDataSource());
 		request.setAttribute("categorieNav", attivitaDao.doRetrieveAllCategorie());
 		request.setAttribute("cittaNav", attivitaDao.doRetrieveAllCitta());
-	}
-
-	protected String getAccessToken(HttpServletRequest request) {
-		HttpSession session = request.getSession(true);
-		String token = (String) session.getAttribute("accessToken");
-		if (token == null) {
-			token = UUID.randomUUID().toString();
-			session.setAttribute("accessToken", token);
-		}
-		return token;
-	}
-
-	protected boolean validateAccessToken(HttpServletRequest request, HttpServletResponse response)
-			throws java.io.IOException {
-		String sessionToken = (String) request.getSession().getAttribute("accessToken");
-		String requestToken = request.getParameter("accessToken");
-		if (sessionToken == null || requestToken == null || !sessionToken.equals(requestToken)) {
-			response.sendError(HttpServletResponse.SC_FORBIDDEN);
-			return false;
-		}
-		return true;
 	}
 
 	protected void forward(HttpServletRequest request, HttpServletResponse response, String view)
@@ -135,4 +112,3 @@ public abstract class BaseServlet extends HttpServlet {
 		return values;
 	}
 }
-
