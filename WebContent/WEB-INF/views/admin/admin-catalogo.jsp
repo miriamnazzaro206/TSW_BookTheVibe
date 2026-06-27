@@ -20,7 +20,15 @@
 		<input name="categoria" placeholder="Categoria" required><span class="error"></span>
 		<input name="durata" placeholder="Durata" required><span class="error"></span>
 		<input name="capacita_massima" type="number" min="1" placeholder="Posti complessivi" required><span class="error"></span>
-		<input name="date_evento" placeholder="Date evento separate da virgola: 2026-07-01,2026-07-08" required><span class="error"></span>
+		<div class="date-list-control" data-date-list data-date-required>
+			<input type="hidden" name="date_evento">
+			<div class="date-picker-row">
+				<input class="date-picker-input" type="date" min="<%=java.time.LocalDate.now()%>" aria-label="Data evento">
+				<button type="button" class="date-add-button">Aggiungi data</button>
+			</div>
+			<div class="date-chip-list" aria-live="polite"></div>
+			<span class="error date-list-error"></span>
+		</div>
 		<input name="citta" placeholder="Citta" required><span class="error"></span>
 		<textarea name="descrizione" placeholder="Descrizione" required></textarea><span class="error"></span>
 		<input type="file" name="foto" accept="image/*" multiple>
@@ -70,9 +78,17 @@
 					<form method="post" action="<%=request.getContextPath()%>/admin/catalogo" class="inline-form catalog-date-form">
 						<input type="hidden" name="action" value="date">
 						<input type="hidden" name="id" value="<%=a.getId_attivita()%>">
-						<input name="date_evento" placeholder="Nuove date: 2026-07-01,2026-07-08" required>
+						<div class="date-list-control compact-date-list" data-date-list data-date-required>
+							<input type="hidden" name="date_evento">
+							<div class="date-picker-row">
+								<input class="date-picker-input" type="date" min="<%=java.time.LocalDate.now()%>" aria-label="Nuova data">
+								<button type="button" class="date-add-button">Aggiungi data</button>
+							</div>
+							<div class="date-chip-list" aria-live="polite"></div>
+							<span class="error date-list-error"></span>
+						</div>
 						<input type="number" name="posti_nuove_date" min="1" placeholder="Posti" required>
-						<button type="submit">Aggiungi date</button>
+						<button type="submit">Salva date</button>
 					</form>
 				</td>
 			</tr>

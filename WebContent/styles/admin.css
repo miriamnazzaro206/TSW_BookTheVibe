@@ -28,6 +28,39 @@
 	grid-column: 1 / -1;
 }
 
+.date-list-control {
+	display: grid;
+	gap: 0.55rem;
+	grid-column: 1 / -1;
+}
+
+.date-picker-row {
+	display: grid;
+	grid-template-columns: minmax(170px, 1fr) auto;
+	gap: 0.55rem;
+	align-items: stretch;
+}
+
+.date-add-button {
+	white-space: nowrap;
+}
+
+.date-chip-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.45rem;
+	min-height: 2.2rem;
+	align-items: flex-start;
+}
+
+.date-chip {
+	width: auto;
+	padding: 0.45rem 0.65rem;
+	border-color: var(--line);
+	background: var(--surface);
+	font-size: 0.9rem;
+}
+
 .admin-catalog-table {
 	min-width: 1500px;
 }
@@ -83,12 +116,16 @@
 }
 
 .catalog-date-form {
-	grid-template-columns: minmax(260px, 1fr) minmax(100px, 0.35fr);
-	min-width: 400px;
+	grid-template-columns: minmax(360px, 1fr) minmax(110px, 0.35fr);
+	min-width: 540px;
 }
 
-.catalog-date-form button {
+.catalog-date-form > button[type="submit"] {
 	grid-column: 1 / -1;
+}
+
+.compact-date-list {
+	grid-column: auto;
 }
 
 .admin-catalog-table .inline-form input {
