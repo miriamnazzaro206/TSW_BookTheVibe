@@ -20,9 +20,6 @@ public class RegistrazioneServlet extends BaseServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if (!validateAccessToken(request, response)) {
-			return;
-		}
 		try {
 			UtenteBean utente = buildUtente(request);
 			new UtenteDaoImp(getDataSource()).doSave(utente);
