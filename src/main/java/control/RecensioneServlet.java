@@ -33,9 +33,6 @@ public class RecensioneServlet extends BaseServlet {
 		if (!requireUser(request, response)) {
 			return;
 		}
-		if (!validateAccessToken(request, response)) {
-			return;
-		}
 		try {
 			int attivitaId = Integer.parseInt(request.getParameter("attivitaId"));
 			RecensioneDaoImp dao = new RecensioneDaoImp(getDataSource());

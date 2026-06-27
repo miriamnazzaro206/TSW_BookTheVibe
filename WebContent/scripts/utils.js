@@ -14,19 +14,6 @@
     };
   };
 
-  window.BTV.addAccessTokens = function () {
-    var forms = document.querySelectorAll("form[method='post'], form[method='POST']");
-    Array.prototype.forEach.call(forms, function (form) {
-      if (!form.querySelector("input[name='accessToken']") && window.BTV_ACCESS_TOKEN) {
-        var token = document.createElement("input");
-        token.type = "hidden";
-        token.name = "accessToken";
-        token.value = window.BTV_ACCESS_TOKEN;
-        form.appendChild(token);
-      }
-    });
-  };
-
   window.BTV.euro = function (value) {
     return "\u20ac " + value;
   };

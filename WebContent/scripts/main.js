@@ -17,7 +17,6 @@
   }
 
   function init() {
-    if (window.BTV.addAccessTokens) window.BTV.addAccessTokens();
     if (window.BTV.setupValidation) window.BTV.setupValidation();
     if (window.BTV.setupAjaxFeatures) window.BTV.setupAjaxFeatures();
     if (window.BTV.setupAdminInteractions) window.BTV.setupAdminInteractions();

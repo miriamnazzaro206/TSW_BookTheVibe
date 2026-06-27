@@ -30,9 +30,6 @@ public class AdminCouponServlet extends BaseServlet {
 		if (!requireAdmin(request, response)) {
 			return;
 		}
-		if (!validateAccessToken(request, response)) {
-			return;
-		}
 		try {
 			CodiceScontoDaoImp dao = new CodiceScontoDaoImp(getDataSource());
 			if ("stato".equals(request.getParameter("action"))) {

@@ -14,7 +14,6 @@
 <main class="section">
 	<h1>Gestione Catalogo</h1>
 	<form method="post" action="<%=request.getContextPath()%>/admin/catalogo" enctype="multipart/form-data" class="admin-form validated-form">
-		<input type="hidden" name="accessToken" value="<%=session.getAttribute("accessToken")%>">
 		<input name="titolo" placeholder="Titolo" required><span class="error"></span>
 		<input name="provider" placeholder="Agenzia provider" required><span class="error"></span>
 		<input name="prezzo_unitario" type="number" min="0" step="0.01" placeholder="Prezzo unitario" required><span class="error"></span>
@@ -52,7 +51,6 @@
 				<td><%=a.isStato() ? "Attivo" : "Non Attivo"%></td>
 				<td>
 					<form method="post" action="<%=request.getContextPath()%>/admin/catalogo" class="inline-form catalog-status-form">
-						<input type="hidden" name="accessToken" value="<%=session.getAttribute("accessToken")%>">
 						<input type="hidden" name="action" value="stato">
 						<input type="hidden" name="id" value="<%=a.getId_attivita()%>">
 						<input type="hidden" name="stato" value="<%=!a.isStato()%>">
@@ -61,7 +59,6 @@
 				</td>
 				<td>
 					<form method="post" action="<%=request.getContextPath()%>/admin/catalogo" class="inline-form catalog-edit-form">
-						<input type="hidden" name="accessToken" value="<%=session.getAttribute("accessToken")%>">
 						<input type="hidden" name="action" value="modifica">
 						<input type="hidden" name="id" value="<%=a.getId_attivita()%>">
 						<input type="number" name="prezzo" step="0.01" value="<%=a.getPrezzo_unitario()%>">
@@ -71,7 +68,6 @@
 				</td>
 				<td>
 					<form method="post" action="<%=request.getContextPath()%>/admin/catalogo" class="inline-form catalog-date-form">
-						<input type="hidden" name="accessToken" value="<%=session.getAttribute("accessToken")%>">
 						<input type="hidden" name="action" value="date">
 						<input type="hidden" name="id" value="<%=a.getId_attivita()%>">
 						<input name="date_evento" placeholder="Nuove date: 2026-07-01,2026-07-08" required>

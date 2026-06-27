@@ -32,9 +32,6 @@ public class CheckoutServlet extends BaseServlet {
 		if (!requireUser(request, response)) {
 			return;
 		}
-		if (!validateAccessToken(request, response)) {
-			return;
-		}
 		UtenteBean utente = getUtente(request);
 		CarrelloBean carrello = getCarrello(request);
 		if (carrello.getElementi().isEmpty()) {

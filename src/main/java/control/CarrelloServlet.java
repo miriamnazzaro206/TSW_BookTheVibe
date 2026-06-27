@@ -29,10 +29,6 @@ public class CarrelloServlet extends BaseServlet {
 			applySconto(request, response, carrello);
 			return;
 		}
-		if (!validateAccessToken(request, response)) {
-			return;
-		}
-
 		if ("svuota".equals(action)) {
 			carrello.svuota();
 		} else if ("rimuovi".equals(action)) {

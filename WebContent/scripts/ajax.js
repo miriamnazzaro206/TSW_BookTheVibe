@@ -34,10 +34,6 @@
 
       formData = new URLSearchParams(new FormData(couponForm));
       formData.set("action", "sconto");
-      if (!formData.has("accessToken") && window.BTV_ACCESS_TOKEN) {
-        formData.set("accessToken", window.BTV_ACCESS_TOKEN);
-      }
-
       fetch(couponForm.getAttribute("data-url"), {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
@@ -88,8 +84,6 @@
         formData.set("id", input.getAttribute("data-id"));
         formData.set("data", input.getAttribute("data-data"));
         formData.set("quantita", input.value);
-        if (window.BTV_ACCESS_TOKEN) formData.set("accessToken", window.BTV_ACCESS_TOKEN);
-
         fetch(input.getAttribute("data-url"), {
           method: "POST",
           headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },

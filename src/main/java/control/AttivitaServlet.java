@@ -42,9 +42,6 @@ public class AttivitaServlet extends BaseServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if (!validateAccessToken(request, response)) {
-			return;
-		}
 		try {
 			int id = Integer.parseInt(request.getParameter("id"));
 			int quantita = Integer.parseInt(request.getParameter("quantita"));

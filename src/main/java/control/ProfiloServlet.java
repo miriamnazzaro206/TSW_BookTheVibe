@@ -25,9 +25,6 @@ public class ProfiloServlet extends BaseServlet {
 		if (!requireUser(request, response)) {
 			return;
 		}
-		if (!validateAccessToken(request, response)) {
-			return;
-		}
 		UtenteBean corrente = getUtente(request);
 		UtenteBean aggiornato = RegistrazioneServlet.buildUtente(request);
 		aggiornato.setId_utente(corrente.getId_utente());

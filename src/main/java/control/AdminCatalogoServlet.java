@@ -38,9 +38,6 @@ public class AdminCatalogoServlet extends BaseServlet {
 		if (!requireAdmin(request, response)) {
 			return;
 		}
-		if (!validateAccessToken(request, response)) {
-			return;
-		}
 		String action = request.getParameter("action");
 		try {
 			AttivitaDaoImp attivitaDao = new AttivitaDaoImp(getDataSource());
