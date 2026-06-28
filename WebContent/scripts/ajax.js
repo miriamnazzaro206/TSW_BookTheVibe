@@ -1,6 +1,31 @@
 ﻿(function () {
   window.BTV = window.BTV || {};
 
+  function requestJson(options, onSuccess, onError, onComplete) {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+      var json;
+      if (xhr.readyState !== 4) return;
+      if (xhr.status >= 200 && xhr.status < 300) {
+        try {
+          json = JSON.parse(xhr.responseText);
+          onSuccess(json);
+        } catch (error) {
+          if (onError) onError();
+        }
+      } else if (onError) {
+        onError();
+      }
+      if (onComplete) onComplete();
+    };
+    xhr.open(options.method || "GET", options.url, true);
+    xhr.setRequestHeader("Accept", "application/json");
+    if (options.contentType) {
+      xhr.setRequestHeader("Content-Type", options.contentType);
+    }
+    xhr.send(options.body || null);
+  }
+
   function renderActivityCard(activity, contextPath) {
     var card = document.createElement("a");
     var img;
@@ -34,33 +59,27 @@
 
       formData = new URLSearchParams(new FormData(couponForm));
       formData.set("action", "sconto");
-      fetch(couponForm.getAttribute("data-url"), {
+      requestJson({
+        url: couponForm.getAttribute("data-url"),
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
-        body: formData
-      })
-        .then(function (res) {
-          if (!res.ok) throw new Error("Coupon request failed with " + res.status);
-          return res.json();
-        })
-        .then(function (json) {
-          if (json.valid) {
-            document.getElementById("cartTotal").textContent = json.totale;
-            message.textContent = "Sconto applicato.";
-            message.classList.add("visible", "is-success");
-          } else {
-            message.textContent = json.message || "Codice non valido.";
-            message.classList.add("visible");
-          }
-        })
-        .catch(function () {
-          message.textContent = "Non riesco ad applicare il codice in questo momento. Ricarica la pagina e riprova.";
+        contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+        body: formData.toString()
+      }, function (json) {
+        if (json.valid) {
+          document.getElementById("cartTotal").textContent = json.totale;
+          message.textContent = "Sconto applicato.";
+          message.classList.add("visible", "is-success");
+        } else {
+          message.textContent = json.message || "Codice non valido.";
           message.classList.add("visible");
-        })
-        .finally(function () {
-          button.disabled = false;
-          button.textContent = "Applica";
-        });
+        }
+      }, function () {
+        message.textContent = "Non riesco ad applicare il codice in questo momento. Ricarica la pagina e riprova.";
+        message.classList.add("visible");
+      }, function () {
+        button.disabled = false;
+        button.textContent = "Applica";
+      });
     });
   }
 
@@ -84,39 +103,34 @@
         formData.set("id", input.getAttribute("data-id"));
         formData.set("data", input.getAttribute("data-data"));
         formData.set("quantita", input.value);
-        fetch(input.getAttribute("data-url"), {
+        requestJson({
+          url: input.getAttribute("data-url"),
           method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
-          body: formData
-        })
-          .then(function (res) {
-            return res.json();
-          })
-          .then(function (json) {
-            var total;
-            if (json.valid) {
-              total = document.getElementById("cartTotal");
-              if (total) total.textContent = json.totale;
-              if (message) {
-                message.textContent = "";
-                message.classList.remove("visible", "is-success");
-              }
-            } else if (message) {
-              message.textContent = json.message || "Quantita non disponibile.";
-              message.classList.add("visible");
-              message.classList.remove("is-success");
-            }
-          })
-          .catch(function () {
+          contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+          body: formData.toString()
+        }, function (json) {
+          var total;
+          if (json.valid) {
+            total = document.getElementById("cartTotal");
+            if (total) total.textContent = json.totale;
             if (message) {
-              message.textContent = "Non riesco ad aggiornare la quantita.";
-              message.classList.add("visible");
-              message.classList.remove("is-success");
+              message.textContent = "";
+              message.classList.remove("visible", "is-success");
             }
-          })
-          .finally(function () {
-            input.disabled = false;
-          });
+          } else if (message) {
+            message.textContent = json.message || "Quantita non disponibile.";
+            message.classList.add("visible");
+            message.classList.remove("is-success");
+          }
+        }, function () {
+          if (message) {
+            message.textContent = "Non riesco ad aggiornare la quantita.";
+            message.classList.add("visible");
+            message.classList.remove("is-success");
+          }
+        }, function () {
+          input.disabled = false;
+        });
       }, 350);
       input.addEventListener("change", update);
     });
@@ -145,30 +159,24 @@
       grid.classList.add("is-loading");
       count.textContent = "Aggiornamento risultati...";
 
-      fetch(toolbar.getAttribute("data-url") + "?" + params.toString())
-        .then(function (res) {
-          return res.json();
-        })
-        .then(function (activities) {
-          grid.innerHTML = "";
-          if (activities.length === 0) {
-            var empty = document.createElement("p");
-            empty.className = "empty-state";
-            empty.textContent = "Nessuna attivita trovata con questi filtri.";
-            grid.appendChild(empty);
-          } else {
-            activities.forEach(function (activity) {
-              grid.appendChild(renderActivityCard(activity, contextPath));
-            });
-          }
-          count.textContent = activities.length + " risultati";
-        })
-        .catch(function () {
-          count.textContent = "Non riesco ad aggiornare il catalogo.";
-        })
-        .finally(function () {
-          grid.classList.remove("is-loading");
-        });
+      requestJson({ url: toolbar.getAttribute("data-url") + "?" + params.toString() }, function (activities) {
+        grid.innerHTML = "";
+        if (activities.length === 0) {
+          var empty = document.createElement("p");
+          empty.className = "empty-state";
+          empty.textContent = "Nessuna attivita trovata con questi filtri.";
+          grid.appendChild(empty);
+        } else {
+          activities.forEach(function (activity) {
+            grid.appendChild(renderActivityCard(activity, contextPath));
+          });
+        }
+        count.textContent = activities.length + " risultati";
+      }, function () {
+        count.textContent = "Non riesco ad aggiornare il catalogo.";
+      }, function () {
+        grid.classList.remove("is-loading");
+      });
     }
 
     category.addEventListener("change", loadCatalog);
@@ -196,21 +204,16 @@
       params.set("attivitaId", panel.getAttribute("data-attivita-id"));
       params.set("data", select.value);
 
-      fetch(panel.getAttribute("data-availability-url") + "?" + params.toString())
-        .then(function (res) {
-          return res.json();
-        })
-        .then(function (json) {
-          posti = Number(json.posti || posti);
-          if (option) option.setAttribute("data-posti", posti);
-          quantity.max = posti;
-          if (Number(quantity.value) > posti) quantity.value = posti;
-          message.textContent = posti === 1 ? "Rimane 1 posto disponibile." : "Rimangono " + posti + " posti disponibili.";
-          if (validateQuantity) window.BTV.validateInput(quantity);
-        })
-        .catch(function () {
-          message.textContent = "Disponibilita non aggiornata in tempo reale.";
-        });
+      requestJson({ url: panel.getAttribute("data-availability-url") + "?" + params.toString() }, function (json) {
+        posti = Number(json.posti || posti);
+        if (option) option.setAttribute("data-posti", posti);
+        quantity.max = posti;
+        if (Number(quantity.value) > posti) quantity.value = posti;
+        message.textContent = posti === 1 ? "Rimane 1 posto disponibile." : "Rimangono " + posti + " posti disponibili.";
+        if (validateQuantity) window.BTV.validateInput(quantity);
+      }, function () {
+        message.textContent = "Disponibilita non aggiornata in tempo reale.";
+      });
     }
 
     select.addEventListener("change", function () {
