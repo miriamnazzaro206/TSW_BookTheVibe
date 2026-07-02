@@ -1,0 +1,69 @@
+:root {
+	--green: #86E438;
+	--lime: #EAEF5C;
+	--violet: #A37BE6;
+	--orange: #DB6E1A;
+	--deep: #158B51;
+	--paper: color-mix(in srgb, #EAEF5C 18%, white);
+	--surface: color-mix(in srgb, #EAEF5C 7%, white);
+	--line: color-mix(in srgb, #158B51 28%, #EAEF5C);
+	--shadow-soft: 0 10px 24px color-mix(in srgb, #158B51 16%, transparent);
+	--shadow-card: 0 14px 28px color-mix(in srgb, #A37BE6 20%, transparent);
+}
+
+* { box-sizing: border-box; }
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	margin: 0;
+	font-family: Arial, Helvetica, sans-serif;
+	background:
+		linear-gradient(180deg, color-mix(in srgb, #EAEF5C 32%, transparent), transparent 260px),
+		var(--paper);
+	color: var(--deep);
+	line-height: 1.5;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+img {
+	max-width: 100%;
+	display: block;
+}
+
+main {
+	min-height: calc(100vh - 74px);
+}
+
+h1, h2, h3, p {
+	overflow-wrap: anywhere;
+}
+
+.section {
+	max-width: 1180px;
+	margin: 0 auto;
+	padding: 2rem 1.5rem;
+}
+
+.narrow {
+	max-width: 760px;
+}
+
+.muted {
+	color: var(--orange);
+}
+
+.success {
+	text-align: center;
+}
+
+.success-msg {
+	color: var(--deep);
+	font-weight: 700;
+}
