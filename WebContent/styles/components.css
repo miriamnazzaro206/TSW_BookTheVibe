@@ -1,0 +1,223 @@
+button,
+.button-link {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid var(--deep);
+	background: var(--surface);
+	color: var(--deep);
+	border-radius: 8px;
+	padding: 0.65rem 0.9rem;
+	cursor: pointer;
+	font-weight: 700;
+	line-height: 1.2;
+	text-decoration: none;
+	transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+button:hover,
+.button-link:hover {
+	transform: translateY(-1px);
+	box-shadow: 0 8px 18px color-mix(in srgb, var(--deep) 24%, transparent);
+}
+
+button:disabled {
+	cursor: wait;
+	opacity: 0.65;
+	transform: none;
+	box-shadow: none;
+}
+
+.primary {
+	background: var(--deep);
+	color: white;
+	border-color: var(--deep);
+}
+
+.danger {
+	color: var(--orange);
+	border-color: var(--orange);
+}
+
+input,
+select,
+textarea {
+	width: 100%;
+	border: 1px solid var(--line);
+	border-radius: 8px;
+	padding: 0.7rem;
+	font: inherit;
+	background: var(--surface);
+	transition: border-color 150ms ease, box-shadow 150ms ease, background 150ms ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+	outline: none;
+	border-color: var(--violet);
+	box-shadow: 0 0 0 3px color-mix(in srgb, var(--violet) 28%, transparent);
+}
+
+textarea {
+	min-height: 120px;
+	resize: vertical;
+}
+
+.field-error {
+	border-color: var(--orange);
+	background: color-mix(in srgb, var(--orange) 10%, white);
+}
+
+.field-valid {
+	border-color: color-mix(in srgb, var(--deep) 70%, var(--green));
+}
+
+.error {
+	display: none;
+	color: var(--orange);
+	font-size: 0.9rem;
+}
+
+.error.visible {
+	display: block;
+}
+
+.error.is-success {
+	color: var(--deep);
+}
+
+.grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+	gap: 1rem;
+	position: relative;
+}
+
+.activity-card {
+	display: grid;
+	gap: 0.6rem;
+	background: var(--surface);
+	border: 1px solid var(--line);
+	border-radius: 8px;
+	padding: 0.75rem;
+	min-width: 230px;
+	transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+	position: relative;
+	overflow: hidden;
+}
+
+.activity-card:hover {
+	transform: translateY(-3px);
+	border-color: var(--violet);
+	box-shadow: var(--shadow-card);
+}
+
+.activity-card img {
+	width: 100%;
+	aspect-ratio: 4 / 3;
+	object-fit: cover;
+	border-radius: 6px;
+	background: color-mix(in srgb, var(--lime) 38%, white);
+}
+
+.activity-card strong {
+	font-size: 1.02rem;
+	line-height: 1.25;
+}
+
+.activity-card span {
+	color: var(--orange);
+	font-size: 0.95rem;
+}
+
+.booking-panel,
+.summary {
+	background: var(--surface);
+	border: 1px solid var(--line);
+	border-radius: 8px;
+	padding: 1rem;
+	box-shadow: var(--shadow-soft);
+}
+
+.booking-panel {
+	position: sticky;
+	top: 96px;
+}
+
+.booking-panel form,
+.form-grid {
+	display: grid;
+	gap: 0.7rem;
+}
+
+.booking-panel .button-link {
+	width: 100%;
+	margin-top: 0.75rem;
+}
+
+.availability-message {
+	margin: 0;
+	padding: 0.7rem;
+	border-radius: 8px;
+	background: color-mix(in srgb, var(--green) 20%, white);
+}
+
+.review {
+	border-left: 4px solid var(--violet);
+	padding-left: 1rem;
+	margin: 1rem 0;
+}
+
+.empty-state {
+	grid-column: 1 / -1;
+	padding: 1.5rem;
+	background: var(--surface);
+	border: 1px dashed var(--line);
+	border-radius: 8px;
+	text-align: center;
+}
+
+.grid.is-loading {
+	opacity: 0.62;
+	pointer-events: none;
+}
+
+.table-wrap {
+	overflow-x: auto;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	background: var(--surface);
+	border: 1px solid var(--line);
+}
+
+tbody tr:hover {
+	background: color-mix(in srgb, var(--lime) 22%, white);
+}
+
+th,
+td {
+	text-align: left;
+	padding: 0.75rem;
+	border-bottom: 1px solid var(--line);
+	vertical-align: top;
+}
+
+th {
+	background: color-mix(in srgb, var(--green) 24%, var(--lime));
+	color: var(--deep);
+}
+
+tr:last-child td {
+	border-bottom: 0;
+}
+
+.thumb {
+	width: 72px;
+	height: 56px;
+	object-fit: cover;
+	border-radius: 6px;
+}
