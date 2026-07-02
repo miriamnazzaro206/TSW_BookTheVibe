@@ -1,0 +1,52 @@
+@media (max-width: 780px) {
+	.topbar {
+		align-items: flex-start;
+		flex-direction: column;
+	}
+
+	.nav-left,
+	.nav-right {
+		width: 100%;
+	}
+
+	.dropdown-menu {
+		position: static;
+		box-shadow: none;
+		margin-top: 0.4rem;
+	}
+
+	.detail-layout,
+	.cart-layout {
+		grid-template-columns: 1fr;
+	}
+
+	.booking-panel {
+		position: static;
+	}
+
+	.detail-gallery {
+		grid-template-columns: 1fr;
+	}
+
+	.detail-gallery img {
+		height: 260px;
+	}
+
+	.cart-row {
+		grid-template-columns: 1fr;
+	}
+
+	.filters > * {
+		width: 100%;
+	}
+
+	.catalog-toolbar,
+	.admin-form {
+		grid-template-columns: 1fr;
+	}
+
+	.catalog-toolbar .muted {
+		justify-self: start;
+		margin: 0;
+	}
+}
