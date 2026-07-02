@@ -1,7 +1,10 @@
 (function () {
+  var currentScript = document.currentScript;
+  var assetBaseUrl = currentScript ? currentScript.src.replace(/scripts\/[^/]+$/, "") : "";
+
   window.BTV = window.BTV || {};
 
-  window.BTV.fallbackImage = "https://images.unsplash.com/photo-1491557345352-5929e343eb89?auto=format&fit=crop&w=600&q=80";
+  window.BTV.fallbackImage = assetBaseUrl + "images/logo.png";
 
   window.BTV.debounce = function (fn, wait) {
     var timer;
