@@ -153,7 +153,6 @@
 
     function loadCatalog() {
       var params = new URLSearchParams();
-      params.set("q", "");
       params.set("categoria", category.value);
       params.set("citta", city.value);
       grid.classList.add("is-loading");

@@ -20,7 +20,6 @@ public class FiltroCatalogoServlet extends BaseServlet {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 
-		String query = normalize(request.getParameter("q"));
 		String categoria = normalize(request.getParameter("categoria"));
 		String citta = normalize(request.getParameter("citta"));
 
@@ -29,7 +28,7 @@ public class FiltroCatalogoServlet extends BaseServlet {
 			StringBuilder json = new StringBuilder("[");
 			boolean first = true;
 			for (AttivitaBean item : attivita) {
-				if (!matches(item, query, categoria, citta)) {
+				if (!matches(item, categoria, citta)) {
 					continue;
 				}
 				if (!first) {
@@ -51,13 +50,7 @@ public class FiltroCatalogoServlet extends BaseServlet {
 		}
 	}
 
-	private boolean matches(AttivitaBean item, String query, String categoria, String citta) {
-		if (!query.isEmpty()) {
-			String text = normalize(item.getTitolo() + " " + item.getDescrizione() + " " + item.getProvider());
-			if (!text.contains(query)) {
-				return false;
-			}
-		}
+	private boolean matches(AttivitaBean item, String categoria, String citta) {
 		if (!categoria.isEmpty() && !normalize(item.getCategoria()).equals(categoria)) {
 			return false;
 		}
