@@ -16,7 +16,7 @@
 	<section>
 		<h1>Carrello</h1>
 		<% if (carrello.getElementi().isEmpty()) { %>
-			<p>Il carrello e vuoto.</p>
+			<p>Il carrello e' vuoto.</p>
 		<% } %>
 		<% for (ElementoCarrelloBean e : carrello.getElementi()) { %>
 			<div class="cart-row">
