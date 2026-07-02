@@ -36,7 +36,7 @@
 			if (attivita != null) for (AttivitaBean a : attivita) {
 			%>
 			<a class="activity-card" href="<%=request.getContextPath()%>/common/attivita?id=<%=a.getId_attivita()%>">
-				<img src="<%=request.getContextPath()%>/image?attivitaId=<%=a.getId_attivita()%>" onerror="this.src='https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=80'" alt="<%=a.getTitolo()%>">
+				<img src="<%=request.getContextPath()%>/image?attivitaId=<%=a.getId_attivita()%>" onerror="this.src='<%=request.getContextPath()%>/images/logo.png'" alt="<%=a.getTitolo()%>">
 				<strong><%=a.getTitolo()%></strong>
 				<span><%=a.getCitta()%> &middot; &euro; <%=String.format("%.2f", a.getPrezzo_unitario())%></span>
 			</a>

@@ -19,7 +19,7 @@ ArrayList<RecensioneBean> recensioni = (ArrayList<RecensioneBean>) request.getAt
 <main class="detail-layout">
 	<section>
 		<div class="detail-gallery">
-			<img src="<%=request.getContextPath()%>/image?attivitaId=<%=a.getId_attivita()%>&index=0" onerror="this.src='https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80'" alt="<%=a.getTitolo()%>">
+			<img src="<%=request.getContextPath()%>/image?attivitaId=<%=a.getId_attivita()%>&index=0" onerror="this.src='<%=request.getContextPath()%>/images/logo.png'" alt="<%=a.getTitolo()%>">
 			<img src="<%=request.getContextPath()%>/image?attivitaId=<%=a.getId_attivita()%>&index=1" onerror="this.style.display='none'" alt="<%=a.getTitolo()%>">
 		</div>
 		<h1><%=a.getTitolo()%></h1>
