@@ -1,0 +1,133 @@
+.filters {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.7rem;
+	margin-bottom: 1rem;
+	align-items: center;
+}
+
+.filters > * {
+	width: auto;
+}
+
+.admin-form {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 0.7rem;
+	margin-bottom: 1.5rem;
+	padding: 1rem;
+	background: var(--surface);
+	border: 1px solid var(--line);
+	border-radius: 8px;
+	box-shadow: var(--shadow-soft);
+}
+
+.admin-form textarea,
+.admin-form input[type="file"],
+.admin-form button {
+	grid-column: 1 / -1;
+}
+
+.date-list-control {
+	display: grid;
+	gap: 0.55rem;
+	grid-column: 1 / -1;
+}
+
+.date-picker-row {
+	display: grid;
+	grid-template-columns: minmax(170px, 1fr) auto;
+	gap: 0.55rem;
+	align-items: stretch;
+}
+
+.date-add-button {
+	white-space: nowrap;
+}
+
+.date-chip-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.45rem;
+	min-height: 2.2rem;
+	align-items: flex-start;
+}
+
+.date-chip {
+	width: auto;
+	padding: 0.45rem 0.65rem;
+	border-color: var(--line);
+	background: var(--surface);
+	font-size: 0.9rem;
+}
+
+.admin-catalog-table {
+	min-width: 1500px;
+}
+
+.admin-catalog-table th,
+.admin-catalog-table td {
+	padding: 1rem 1.15rem;
+	vertical-align: top;
+}
+
+.admin-catalog-table th:nth-child(1),
+.admin-catalog-table td:nth-child(1) {
+	width: 110px;
+}
+
+.admin-catalog-table th:nth-child(2),
+.admin-catalog-table td:nth-child(2) {
+	min-width: 220px;
+}
+
+.admin-catalog-table th:nth-child(3),
+.admin-catalog-table td:nth-child(3) {
+	min-width: 130px;
+}
+
+.admin-catalog-table th:nth-child(4),
+.admin-catalog-table td:nth-child(4),
+.admin-catalog-table th:nth-child(5),
+.admin-catalog-table td:nth-child(5) {
+	min-width: 95px;
+}
+
+.admin-catalog-table th:nth-child(6),
+.admin-catalog-table td:nth-child(6) {
+	min-width: 135px;
+}
+
+.catalog-status-form,
+.catalog-edit-form,
+.catalog-date-form {
+	display: grid;
+	gap: 0.6rem;
+	align-items: stretch;
+}
+
+.catalog-status-form {
+	min-width: 104px;
+}
+
+.catalog-edit-form {
+	grid-template-columns: minmax(110px, 0.65fr) minmax(240px, 1.35fr) auto;
+	min-width: 520px;
+}
+
+.catalog-date-form {
+	grid-template-columns: minmax(360px, 1fr) minmax(110px, 0.35fr);
+	min-width: 540px;
+}
+
+.catalog-date-form > button[type="submit"] {
+	grid-column: 1 / -1;
+}
+
+.compact-date-list {
+	grid-column: auto;
+}
+
+.admin-catalog-table .inline-form input {
+	max-width: none;
+}
